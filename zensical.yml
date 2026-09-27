@@ -1,0 +1,95 @@
+site_name: Mahler — Symphony No. 8 in E-flat major
+site_description: A research archive on Mahler's Symphony No. 8, the "Symphony of a Thousand" — texts, analysis, recordings, and historical context.
+site_author: magicat888
+
+site_url: https://magicat888.github.io/mahler-symphony-no-8
+repo_url: https://github.com/magicat888/mahler-symphony-no-8
+repo_name: magicat888/mahler-symphony-no-8
+edit_uri: edit/main/docs/
+
+docs_dir: docs
+site_dir: site
+
+# Don't fail on absolute links / missing assets during build
+strict: false
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.tracking
+    - navigation.indexes
+    - navigation.footer
+    - toc.follow
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 4
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+plugins:
+  - search:
+      lang: en
+
+extra:
+  generator: false
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/magicat888
+  # Note: the same DUDAMEL_TRACK_MAP anchor (dudamel-track-map-dg-2021) is set
+  # both via frontmatter anchor and via raw HTML <a id> in each file, so this
+  # site renders consistently across renderers (GitHub, Vercel, Netlify).
+
+nav:
+  - Home: index.md
+  - The Two Texts: symphony-no-8-verses.md
+  - Historical Context: mahler-8-historical-context.md
+  - Late-Symphony Trajectory: mahler-8-late-symphony-trajectory.md
+  - Main Analysis: mahler-8-analysis.md
+  - The Double Fugue (Part I, mm. 312–365): mahler-8-double-fugue.md
+  - Bergschluchten — Full Text: bergschluchten-full-text.md
+  - The Eight Solo Roles (Part II): mahler-8-part-2-roles.md
+  - Key-Area Map of Part II: mahler-8-key-map.md
+  - The Freud Connection: mahler-8-freud-connection.md
+  - Recording Comparison: mahler-8-recordings.md
+  - Source Citation: mahler-8-source-citation.md
+  - Source Chapter OCR (pages 213–237): mahler-8-source-chapter-p213-237.md
