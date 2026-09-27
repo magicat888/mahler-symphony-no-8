@@ -41,7 +41,7 @@ jobs:
         run: python -m pip install --upgrade pip && python -m pip install "zensical[material]"
 
       - name: Build site
-        run: zensical build --strict
+        run: zensical build --strict -f zensical.yml
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
