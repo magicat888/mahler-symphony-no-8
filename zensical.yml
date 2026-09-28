@@ -81,15 +81,19 @@ extra:
 
 nav:
   - Home: index.md
-  - The Two Texts: symphony-no-8-verses.md
-  - Historical Context: mahler-8-historical-context.md
-  - Late-Symphony Trajectory: mahler-8-late-symphony-trajectory.md
-  - Main Analysis: mahler-8-analysis.md
-  - The Double Fugue (Part I, mm. 312–365): mahler-8-double-fugue.md
-  - Bergschluchten — Full Text: bergschluchten-full-text.md
-  - The Eight Solo Roles (Part II): mahler-8-part-2-roles.md
-  - Key-Area Map of Part II: mahler-8-key-map.md
-  - The Freud Connection: mahler-8-freud-connection.md
-  - Recording Comparison: mahler-8-recordings.md
-  - Source Citation: mahler-8-source-citation.md
-  - Source Chapter OCR (pages 213–237): mahler-8-source-chapter-p213-237.md
+  - Texts:
+      - The Two Texts: symphony-no-8-verses.md
+      - Bergschluchten — Full Text: bergschluchten-full-text.md
+  - Context:
+      - Historical Context: mahler-8-historical-context.md
+      - Late-Symphony Trajectory: mahler-8-late-symphony-trajectory.md
+      - The Freud Connection: mahler-8-freud-connection.md
+  - Analysis:
+      - Main Analysis: mahler-8-analysis.md
+      - The Double Fugue (Part I, mm. 312–365): mahler-8-double-fugue.md
+      - Key-Area Map of Part II: mahler-8-key-map.md
+      - The Eight Solo Roles (Part II): mahler-8-part-2-roles.md
+  - Reference:
+      - Recording Comparison: mahler-8-recordings.md
+      - Source Citation: mahler-8-source-citation.md
+      - Source Chapter OCR (pages 213–237): mahler-8-source-chapter-p213-237.md
