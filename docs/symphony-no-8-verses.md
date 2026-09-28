@@ -33,6 +33,50 @@ Mahler took considerable liberties with the standard 9th-century Latin hymn:
 
 The text Mahler set contains **seven and a half verses** of the hymn, distributed non-contiguously across the movement's sonata-allegro sections. A page formerly owned by Bruno Walter (now in the New York Public Library) shows the Latin text Mahler wrote down before composing — Mahler based his setting on this list, with the modifications above.
 
+# Highlights
+
+When listening to Part I, Mahler builds the entire movement around a few key Latin phrases. The music is not a gentle prayer; it is an urgent, driving storm of sound.
+
+Here are the most critical lines of the text to watch out for, along with exactly what to listen for in the music:
+
+## 1. The Opening Incantation
+
+> _Veni, creator spiritus, / Mentes tuorum visita_  
+> _(Come, Creator Spirit, / Visit the minds of Your people)_
+
+- What to listen for: The very first second of the symphony. The organ blasts a massive E-flat major chord, and the entire double choir immediately shouts _"Veni!"_ like a thunderclap. It is urgent, aggressive, and grand. This opening two-note leap up and down (on the word _Veni_) is the musical seed for the entire symphony.
+
+## 2. The Prayer for Light
+
+> _Accende lumen sensibus, / Infunde amorem cordibus!_  
+> _(Inflame our senses with light, / Infuse our hearts with love!)_
+
+- What to listen for: This is the structural and emotional climax of Part I. Mahler builds a massive, complex fugal development leading up to this moment. When the choirs finally burst into _"Accende,"_ it sounds like a literal explosion of light. The brass blares, the tempo pushes forward frantically, and the music reaches a state of sheer, ecstatic frenzy.
+
+## 3. The Defense Against Darkness
+
+> _Hostem repellas longius, / Pacemque dones protinus_  
+> _(Drive the enemy far away, / And grant us peace without delay)_
+
+- What to listen for: The mood suddenly shifts from triumphant to militaristic. The music turns dark and march-like. Listen to how the choirs spit out the word _"Hostem"_ (enemy) with sharp, rhythmic aggression, as if physically fighting off spiritual darkness.
+
+## 4. The Final Shout of Glory
+
+> _Gloria Patri Domino, / Natusque qui a mortuis_  
+> _(Glory be to God the Father, / And to the Son who rose from the dead)_
+
+- What to listen for: The Coda (the grand finale of Part I). The music accelerates into a dizzying, breathless gallop. The boys' choir cuts through the noise, singing high above everyone else, before the entire orchestra and off-stage brass section collide in a final, shattering E-flat major chord. It leaves you completely breathless before the silence of Part II begins.
+
+Mahler bridges these descriptions directly into the **Seven Gifts of the Holy Spirit** (traditionally drawn from the biblical Book of Isaiah). While Stanza 2 describes _what the Spirit is_ (fountain, fire, love, unction), Stanza 3 invokes the _seven tools_ the Spirit uses to transform the human mind: [[1](http://catholicharboroffaithandmorals.com/Challoner_Preparing_Soul_Holy_Spirit.html), [2](https://www.canticanova.com/articles/easter/artar1.htm)]
+
+- **Wisdom** (_Sapientia_)
+- **Understanding** (_Intellectus_)
+- **Counsel** (_Consilium_)
+- **Fortitude/Courage** (_Fortitudo_)
+- **Knowledge** (_Scientia_)
+- **Piety/Devotion** (_Pietas_)
+- **Fear of the Lord/Awe** (_Timor Domini_) [[1](https://www.canticanova.com/articles/easter/artar1.htm)]
+
 ---
 
 ### Mahler's Text — In Performance Order
@@ -102,6 +146,11 @@ Per te sciamus da Patrem,
 Noscamus atque filium,
 Teque utriusque Spiritum,
 Credamus omni tempore.
+
+Tu septiformis munere,
+Digitus paternae dexterae,
+Tu rite promissum Patris,
+Sermone ditans guttura.
 ```
 
 #### 9. Development, Sixth Section (mm. 366–412) — Verse 3, second couplet (returning)
@@ -121,8 +170,10 @@ Donum Dei altissimi,
 #### 11. Recapitulation, Secondary Section continued (mm. 463ff.) — *the thought of peace*
 
 ```text
+Tu septiformis munere,             ← Verse 6, line 1
 Pacemque dones protinus,           ← Verse 4, line 2
-Adstringe pacis foedera.           ← Verse 7, last line (Mahler uses only this half-verse)
+Dissolve litis vincula,            ← Verse 7, line 1
+Adstringe pacis foedera.           ← Verse 7, line 2
 ```
 
 #### 12. Recapitulation, Final Section (mm. 474–489) — Verse 4, couplet 2
@@ -210,6 +261,11 @@ Through you may we know the Father,
 And also come to know the Son,
 And may we believe in you,
 The Spirit of them both, at all times.
+
+You, sevenfold in gifts,
+Finger of the Father's right hand,
+You, the Father's promised One,
+Enriching our tongues with speech.
 ```
 
 #### 9. Development, Sixth Section
@@ -229,7 +285,9 @@ The highest gift of God,
 #### 11. Recapitulation — *the thought of peace*
 
 ```text
+You, sevenfold in gifts,
 And grant us peace at once,
+Dissolve the fetters of strife,
 Bind the pacts of peace in closest union.
 ```
 
@@ -276,6 +334,47 @@ Mahler's musical setting peaks in the development section where he launches a co
 ## Part II — Goethe's *Faust*, Closing Scene (German)
 
 Part II sets the final pages of Goethe's *Faust*: rocky mountain gorges (*Bergschluchten*), hermits, choirs of angels, redeemed penitents, and Faust's immortal soul ascending. The structure is dramatic / operatic rather than sonata-form.
+
+Here is your listening guide for the most critical textual moments in Part II (Goethe’s _Faust_).
+
+Unlike the thunderous architecture of Part I, Part II is a vast, continuous landscape. It moves from eerie, rocky wilderness up through layers of clouds, angels, and penitent souls, culminating in a state of absolute weightlessness.
+
+Watch for these four key highlights in the text and music:
+
+## 1. The Human Earthly Struggle
+
+> _Gerettet ist das edle Glied / Der Geisterwelt vom Bösen..._  
+> _(Saved is the noble member / Of the spirit world from evil...)_
+
+- Who sings it: The Choir of Angels (often sung by the women's and boys' choirs).
+- What to listen for: After a long, dark, and brooding orchestral opening and the heavy earth-bound solos of the Holy Hermits, the clouds break. The children’s voices pierce through the texture. They are carrying Faust’s immortal soul upward. The music becomes light, buoyant, and bouncy, symbolizing the shedding of heavy, earthly gravity.
+
+## 2. The Vision of the Divine Feminine
+
+> _Blicket auf zum Retterblick, / Alle reuig Zarten..._  
+> _(Look up to the redeeming glance, / All you penitent, tender ones...)_
+
+- Who sings it: Doctor Marianus (The Tenor).
+- What to listen for: This is the emotional pivot point of Part II. After the three penitent women (Magna Peccatrix, Mulier Samaritana, Maria Aegyptiaca) and Gretchen plead for Faust's soul, Doctor Marianus falls to his knees in ecstasy. He commands everyone to look up at the Mater Gloriosa (The Virgin Mary). Listen for his voice straining at the absolute top of its range, completely saturated with rapturous, almost unbearable intensity, accompanied by shimmering harps.
+
+## 3. The Command of Grace
+
+> _Komm! hebe dich zu höhern Sphären! / Wenn er dich ahnet, folgt er nach._  
+> _(Come! Raise yourself to higher spheres! / If he senses you, he will follow.)_
+
+- Who sings it: Mater Gloriosa (The Virgin Mary).
+- What to listen for: The entire massive orchestra and choir completely vanish. The music drops into near-absolute silence. High up, usually from an off-stage balcony or the highest point of the stage, a single soprano voice sings these two lines over a gossamer, weightless layer of strings and a solo mandolin. It is a moment of pure, suspended time.
+
+## 4. The Transcendental Transfiguration
+
+> _Alles Vergängliche / Ist nur ein Gleichnis..._  
+> _(All that is transitory / Is but a parable...)_
+
+- Who sings it: The Chorus Mysticus (The entire collective force).
+- What to listen for: The grand finale. It begins as the absolute softest whisper you can imagine (_pianississimo_). The choir breathes the words like an eerie, beautiful mist. Slowly, over several minutes, Mahler builds a colossal wall of sound. The theme from the opening _Veni Creator_ from Part I returns, proving the loop is complete.
+
+When they reach the final lines—_"Das Ewig-Weibliche / Zieht uns hinan"_ _(The Eternal-Feminine / Draws us upward)_—the massive pipe organ keys lock in, the off-stage brass blares from the balconies, and the piece explodes into its final, triumphant E-flat major transfiguration.
+
 
 Below are the excerpts Mahler actually sets, beginning with the principal solo voices and ending with the Chorus Mysticus.
 
@@ -930,6 +1029,103 @@ The entire closing scene of Goethe's *Faust* Part II, Act V — the section Mahl
 - **English text** — Bayard Taylor's translation, *Goethe's Faust, Part II* (1870–71, public domain). Source: Internet Archive identifier `goethetaylorfaust02`, full-text search export. URL: `https://archive.org/details/goethetaylorfaust02`.
 - **Mahler's setting** preserves Goethe's sequence with minor cuts (most notably the entire Pater Seraphicus scene, which sets up the Blessed Boys' appearance, is omitted from the score). All other passages appear in order.
 - **Stage directions in italics** are translated by Taylor; in the German text they are German and appear in italics in the original 1832 publication.
+
+---
+
+## Part I — Verse Index (Veni Creator Spiritus)
+
+Mahler's setting distributes the Latin hymn across the sonata-allegro sections of Part I. The hymn is broken into natural verse units; each section references a combination of these verses. The Dudamel/DG 2021 recording (32 tracks) sets most of these verses across the 8 Part I tracks.
+
+### V0 — *Veni, creator spiritus / Mentes tuorum visita*
+
+> "Come, Creator Spirit, / Visit the minds of your people."
+> *Verse 1, couplet 1 (the incantation).*
+
+**Used in sections:** §1 Exposition Main · §3 Intermezzo · §11 Recap — Thought of Peace (first line only as reprise)
+**Dudamel tracks:** Track 1 (Exposition main, 0:00 → 1:21) · Track 4 (Intermezzo, 8:37 → 11:06 — first line only)
+**Key musical context:** Opens the entire symphony with the choir's thunderclap on E♭ major.
+
+### V1 — *Imple superna gratia / Quæ tu creasti pectora*
+
+> "Fill with heavenly grace / The hearts which you have created."
+> *Verse 1, couplet 2.*
+
+**Used in sections:** §2 Exposition Secondary
+**Dudamel tracks:** Track 2 (Exposition secondary, 1:21 → 5:34)
+**Key musical context:** D♭ / A♭ major in the secondary group of the exposition.
+
+### V2 — *Qui Paraclitus diceris / Donum Dei altissimi / Fons vivus, ignis, caritas / Et spiritalis unctio*
+
+> "You who are called the Paraclete, / The highest gift of God, / Living fountain, fire, love, / And spiritual unction."
+> *Verse 2 (the description of the seven gifts of the Spirit).*
+
+**Used in sections:** §2 Exposition Secondary · §10 Recap Secondary · §11 Recap — Thought of Peace (partial)
+**Dudamel tracks:** Track 2 (1:21 → 5:34) · Track 7 (20:36 → 22:24)
+**Key musical context:** Combines exposition secondary with the recapitulation's E♭ pedal "thought of peace."
+
+### V3 — *Infirma nostri corporis / Virtute firmans perpeti*
+
+> "The weakness of our bodies, / Strengthen with lasting power."
+> *Verse 3, couplet 1 (additional verse, not in the standard liturgical numbering).*
+
+**Used in sections:** §4 Closing of Exposition · §5 Development 2nd (re-composed in C♯ minor)
+**Dudamel tracks:** Track 3 (Closing of Exposition, 7:14 → 8:37) · Track 5 (Development 2nd, 11:06 → 16:24)
+**Key musical context:** Sets up the "Veni" theme's shadow — the rhythmic figure is a related but darker variant of the opening motif.
+
+### V4 — *Accende lumen sensibus / Infunde amorem cordibus*
+
+> "Kindle light in our senses, / Pour love into our hearts."
+> *Verse 4, couplet 1 (the breakthrough verse).*
+
+**Used in sections:** §6 Development 3rd (the breakthrough, mm. 262–289) · §9 Development 6th (returning, mm. 366–412)
+**Dudamel tracks:** Track 6 (16:24 → 22:24) — encompasses both §6 and §9
+**Key musical context:** The structural pivot of the entire symphony. Sudden radiant E major fortissimo; the motif becomes the principal theme of Part II.
+
+### V5 — *Hostem repellas longius / Pacemque dones protinus*
+
+> "Drive the enemy far away, / And grant us peace without delay."
+> *Verse 5, couplet 1.*
+
+**Used in sections:** §7 Development 4th · §11 Recap — Thought of Peace (line 2 only)
+**Dudamel tracks:** Track 6 (16:24 → 22:24)
+**Key musical context:** Dark dramatic scene in C♯ minor; march-like character.
+
+### V6 — *Ductore sic te praevio / Vitemus omne [noxium]*
+
+> "Under your guidance, may we so / See all that harms us flee away."
+> *Verse 6, couplet 1. Mahler substitutes **"noxium"** (harmful) for the standard **"pessimum"** (worst).*
+
+**Used in sections:** §8 Development 5th (Double Fugue, mm. 312–365) · §12 Recap Final
+**Dudamel tracks:** Track 6 (16:24 → 22:24) · Track 7 (20:36 → 22:24)
+**Key musical context:** Subject of the Double Fugue at mm. 312.
+
+### V7 — *Per te sciamus da Patrem / Noscamus atque filium / Teque utriusque Spiritum / Credamus omni tempore*
+
+> "Through you may we know the Father, / And also come to know the Son, / And may we believe in you, / The Spirit of them both, at all times."
+> *Verse 7 (the second fugue subject).*
+
+**Used in sections:** §8 Development 5th (Double Fugue) · §11 Recap — Thought of Peace (last line only)
+**Dudamel tracks:** Track 6
+**Key musical context:** The second fugue subject, combined with V6.
+
+### V8 — *Tu septiformis munere / Digitus paternae dexterae / Tu rite promissum Patris / Sermone ditans guttura*
+
+> "You, sevenfold in gifts, / Finger of the Father's right hand, / You, the Father's promised One, / Enriching our tongues with speech."
+> *Verse 3 (the "septiformis" verse, liturgically Verse 3).*
+
+**Used in sections:** §8 Development 5th (Double Fugue) · §11 Recap — Thought of Peace (lines 1 and 3)
+**Dudamel tracks:** Track 6 (16:24 → 22:24) · Track 7 (20:36 → 22:24)
+**Key musical context:** **Recently confirmed** in the Double Fugue at mm. 312–365 — all four lines are now restored, after the source chapter OCR had previously omitted lines 3–4.
+
+### V9 — *Gloria Patri Domino / Natoque, qui a mortuis / Surrexit, ac Paraclito / In saeculorum saecula*
+
+> "Glory be to the Father, the Lord, / And to the Son, who from the dead / Has risen, and to the Paraclete, / For ages of ages."
+> *Verse 8 (the Doxology).*
+
+**Used in sections:** §13 Coda — Gloria
+**Dudamel tracks:** Track 8 (22:24)
+**Key musical context:** The blazing closing doxology; offstage brass (4 trumpets + 3 trombones) blares the Accende theme at the climax.
+
 ---
 
 ## Navigation
@@ -938,4 +1134,4 @@ The entire closing scene of Goethe's *Faust* Part II, Act V — the section Mahl
 ↑ Up: [Mahler 8 Index](index.md)
 → Next: [Historical context](mahler-8-historical-context.md)
 
-**See also:** [Main analysis §5 (The Two Texts)](mahler-8-analysis.md) · [Bergschluchten full text](bergschluchten-full-text.md)
+**See also:** [Main analysis §5 (The Two Texts)](mahler-8-analysis.md) · [Bergschluchten full text](bergschluchten-full-text.md) · [Double Fugue analysis](mahler-8-double-fugue.md)

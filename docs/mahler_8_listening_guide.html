@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mahler 8 — Listening Guide: Structure, Tracks & Full Text</title>
+<meta name="description" content="Interactive listening guide for Mahler's Symphony No. 8. Structure, track map (Dudamel/DG 2021), and full parallel text (Latin/English for Part I, German/English for Part II).">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=EB+Garamond:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script>
+tailwind.config = { theme: { extend: {
+  colors: { mDark:'#0d0f14', mCard:'#161a22', mBorder:'#262c38', mGold:'#c9a227', mGold2:'#e8c84a', mBlue:'#4a6fa5' },
+  fontFamily: { serif:['Cormorant Garamond','serif'], sans:['Inter','sans-serif'], lit:['EB Garamond','serif'] }
+}}}
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { background:#0d0f14; }
+  ::-webkit-scrollbar { width:10px; height:10px; }
+  ::-webkit-scrollbar-track { background:#0d0f14; }
+  ::-webkit-scrollbar-thumb { background:#2c3342; border-radius:5px; }
+  ::-webkit-scrollbar-thumb:hover { background:#3d4658; }
+  .lane { scrollbar-width: thin; }
+  .flash { animation: fl 1.4s ease-out; }
+  [v-cloak] { display: none !important; }
+  @keyframes fl { 0%{background:rgba(201,162,39,.22)} 100%{background:transparent} }
+  .vline { background:linear-gradient(180deg,transparent,#c9a227,transparent); }
+</style>
+</head>
+<body class="text-gray-300 font-sans">
+<noscript>
+<div style="max-width:800px;margin:2em auto;padding:1em;font-family:Georgia,serif;color:#ccc;background:#0d0f14">
+<h1>Mahler: Symphony No. 8 — Listening Guide</h1>
+<p>Structure, Tracks & Parallel Text — Dudamel / DG 2021</p>
+<p>This interactive listening guide requires a JavaScript-enabled browser to display the three-lane interface (structure, track map, and full text). Open this file in Chrome, Safari, or Firefox.</p>
+<p><strong>Part I</strong> — <em>Veni, Creator Spiritus</em>: 10 verse units (V0–V9), 13 sections, 8 tracks.</p>
+<p><strong>Part II</strong> — Goethe, <em>Faust</em> II, Bergschluchten: 28 verse sections, 8 spans, 24 tracks.</p>
+</div>
+</noscript>
+<div id="app" v-cloak class="min-h-screen flex flex-col">
+
+<!-- ===== HEADER ===== -->
+<header class="border-b border-mBorder bg-mDark/95 backdrop-blur sticky top-0 z-30">
+  <div class="max-w-[1800px] mx-auto px-4 sm:px-6 py-3">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-baseline gap-3">
+        <h1 class="font-serif font-bold text-xl sm:text-2xl text-white">Symphony No. 8</h1>
+        <div>
+          <span class="text-mGold text-xs sm:text-sm font-serif italic">Mahler &mdash; Listening Guide</span><br>
+          <span class="text-gray-500 text-[10px] sm:text-xs font-sans">Structure, Tracks &amp; Parallel Text &mdash; Dudamel&thinsp;/&thinsp;DG 2021</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 flex-wrap">
+        <button @click="setPart('I')" :class="part==='I'?'bg-mGold text-mDark border-mGold':'bg-mCard text-gray-300 border-mBorder hover:text-white'"
+                class="px-3 py-1.5 rounded-lg text-xs font-bold border transition">Part I &middot; Veni</button>
+        <button @click="setPart('II')" :class="part==='II'?'bg-mGold text-mDark border-mGold':'bg-mCard text-gray-300 border-mBorder hover:text-white'"
+                class="px-3 py-1.5 rounded-lg text-xs font-bold border transition">Part II &middot; Faust</button>
+        <div class="w-px h-6 bg-mBorder mx-1"></div>
+        <div class="relative">
+          <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs"></i>
+          <input v-model="q" type="text" placeholder="Search text, role, measure…"
+                 class="w-44 sm:w-64 pl-8 pr-3 py-1.5 rounded-lg bg-mCard border border-mBorder text-xs text-white focus:outline-none focus:border-mGold">
+        </div>
+        <button @click="showEN=!showEN" :class="showEN?'text-mGold border-mGold/50':'text-gray-400 border-mBorder'"
+                class="px-3 py-1.5 rounded-lg text-xs font-bold border bg-mCard transition" title="Toggle translation">
+          <i class="fas fa-language"></i> EN
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== STRUCTURE RIBBON ===== -->
+<div class="border-b border-mBorder bg-mCard/40">
+  <div class="max-w-[1800px] mx-auto px-4 sm:px-6 py-3">
+    <div class="flex items-center gap-2 mb-2">
+      <span class="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Architecture</span>
+      <span class="text-[10px] text-gray-600">&mdash; click a span to jump</span>
+    </div>
+    <div class="flex gap-2 overflow-x-auto lane pb-1">
+      <button v-for="s in spans" :key="s.name" @click="gotoSpan(s)"
+              :class="activeSpan===s.name?'border-mGold bg-mGold/10':'border-mBorder bg-mDark hover:border-gray-600'"
+              class="flex-shrink-0 text-left px-3 py-2 rounded-lg border transition min-w-[150px] max-w-[210px]">
+        <div class="font-serif font-bold text-xs" :class="activeSpan===s.name?'text-mGold':'text-white'">{{ s.name }}</div>
+        <div class="text-[10px] text-gray-500 mt-0.5">{{ s.measures }}</div>
+        <div class="text-[10px] text-mBlue mt-0.5">{{ s.key }} &middot; {{ s.tempo }}</div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== THREE LANES ===== -->
+<main class="flex-grow max-w-[1800px] w-full mx-auto px-4 sm:px-6 py-5">
+  <div class="grid lg:grid-cols-[minmax(0,230px)_minmax(0,300px)_minmax(0,1fr)] gap-4">
+
+    <!-- LANE 1: STRUCTURE -->
+    <div class="hidden lg:block">
+      <div class="sticky top-[132px]">
+        <h2 class="font-serif font-bold text-white text-sm mb-2 flex items-center gap-2">
+          <i class="fas fa-sitemap text-mGold text-xs"></i> Structure
+        </h2>
+        <div class="space-y-2 max-h-[calc(100vh-180px)] overflow-y-auto lane pr-1">
+          <div v-for="s in spans" :key="s.name" @click="gotoSpan(s)"
+               :class="activeSpan===s.name?'border-mGold bg-mGold/10':'border-mBorder bg-mCard hover:border-gray-600'"
+               class="rounded-xl border p-3 cursor-pointer transition">
+            <div class="font-serif font-bold text-sm" :class="activeSpan===s.name?'text-mGold':'text-white'">{{ s.name }}</div>
+            <div class="text-[10px] text-gray-500 mt-1">{{ s.measures }}</div>
+            <p class="text-[11px] text-gray-400 mt-1.5 leading-snug">{{ s.desc }}</p>
+            <div class="flex gap-1.5 mt-2 text-[10px]">
+              <span class="px-1.5 py-0.5 rounded bg-mDark border border-mBorder text-gray-400">
+                <i class="fas fa-compact-disc"></i> {{ s.tracks.length }} track{{ s.tracks.length===1?'':'s' }}
+              </span>
+              <span class="px-1.5 py-0.5 rounded bg-mDark border border-mBorder text-gray-400">
+                <i class="fas fa-align-left"></i> {{ s.verses.length }} verse{{ s.verses.length===1?'':'s' }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LANE 2: TRACKS -->
+    <div>
+      <div class="sticky top-[132px]">
+        <h2 class="font-serif font-bold text-white text-sm mb-2 flex items-center justify-between">
+          <span class="flex items-center gap-2"><i class="fas fa-compact-disc text-mGold text-xs"></i> Track Map</span>
+          <span class="text-[10px] text-gray-500 font-sans font-normal">Dudamel / DG 2021</span>
+        </h2>
+        <div class="space-y-1.5 max-h-[calc(100vh-180px)] overflow-y-auto lane pr-1">
+          <div v-for="t in shownTracks" :key="t.id" :id="'tr'+t.id"
+               @click="pickTrack(t)"
+               :class="activeTrack===t.id?'border-mGold bg-mGold/10':'border-mBorder bg-mCard hover:border-gray-600'"
+               class="rounded-xl border p-2.5 cursor-pointer transition group">
+            <div class="flex items-start gap-2">
+              <span class="flex-shrink-0 w-7 h-7 rounded-lg bg-mDark border border-mBorder flex items-center justify-center text-[11px] font-bold"
+                    :class="activeTrack===t.id?'text-mGold border-mGold/50':'text-gray-400'">{{ t.id }}</span>
+              <div class="min-w-0 flex-grow">
+                <div class="font-serif font-bold text-[13px] leading-tight" :class="activeTrack===t.id?'text-mGold':'text-white'">{{ t.title }}</div>
+                <div class="flex items-center gap-2 mt-1 text-[10px] text-gray-500">
+                  <span><i class="far fa-clock"></i> {{ t.time }}</span>
+                  <span>mm. {{ t.measures }}</span>
+                  <span v-if="t.verses.length" class="text-mBlue"><i class="fas fa-align-left"></i> {{ t.verses.length }} verse{{ t.verses.length===1?'':'s' }}</span>
+                </div>
+              </div>
+            </div>
+            <p v-if="activeTrack===t.id" class="text-[11px] text-gray-400 mt-2 pt-2 border-t border-mBorder leading-snug">{{ t.analysis }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LANE 3: TEXT -->
+    <div>
+      <h2 class="font-serif font-bold text-white text-sm mb-2 flex items-center justify-between">
+        <span class="flex items-center gap-2"><i class="fas fa-align-left text-mGold text-xs"></i>
+          {{ part==='I' ? 'Veni, creator spiritus' : "Goethe, Faust II — Bergschluchten" }}
+        </span>
+        <span class="text-[10px] text-gray-500 font-sans font-normal">{{ shownVerses.length }} of {{ partVerses.length }} sections</span>
+      </h2>
+
+      <div class="space-y-3">
+        <div v-for="v in shownVerses" :key="v.vid" :id="'v'+v.vid"
+             :class="[activeVerses.includes(v.vid)?'border-mGold ring-1 ring-mGold/30':'border-mBorder', flashed===v.vid?'flash':'']"
+             class="rounded-xl border bg-mCard overflow-hidden scroll-mt-[150px] transition">
+          <div class="px-4 py-2.5 bg-mDark/70 border-b border-mBorder flex flex-wrap items-center gap-x-3 gap-y-1">
+            <span class="font-serif font-bold text-mGold text-sm">{{ v.speaker }}</span>
+            <span v-if="v.stageDir" class="text-[11px] text-gray-500 italic">{{ v.stageDir }}</span>
+            <div class="ml-auto flex items-center gap-1.5">
+              <button v-for="tid in v.tracks" :key="tid" @click="jumpTrack(tid)"
+                      class="px-2 py-0.5 rounded bg-mBlue/15 border border-mBlue/40 text-mBlue text-[10px] font-bold hover:bg-mBlue/25 transition"
+                      :title="trackById(tid).title">
+                <i class="fas fa-compact-disc"></i> {{ tid }} &middot; {{ trackById(tid).time }}
+              </button>
+              <span v-if="!v.tracks.length" class="text-[10px] text-gray-600 italic">within prev. track</span>
+            </div>
+          </div>
+          <div class="grid gap-4 p-4" :class="showEN?'md:grid-cols-2':''">
+            <div>
+              <div class="text-[9px] uppercase tracking-widest text-gray-600 font-bold mb-1.5">{{ part==='I'?'Latin':'German' }}</div>
+              <div class="font-lit text-[15px] text-gray-100 whitespace-pre-line leading-relaxed">{{ v.german }}</div>
+            </div>
+            <div v-if="showEN" class="md:border-l md:border-mBorder md:pl-4">
+              <div class="text-[9px] uppercase tracking-widest text-gray-600 font-bold mb-1.5">English</div>
+              <div class="font-lit text-[15px] text-gray-400 italic whitespace-pre-line leading-relaxed">{{ v.english }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div v-if="!shownVerses.length" class="rounded-xl border border-mBorder bg-mCard p-10 text-center">
+          <p class="text-gray-400 text-sm">Nothing matches &ldquo;{{ q }}&rdquo; in Part {{ part }}.</p>
+          <button @click="q=''" class="mt-3 px-3 py-1.5 rounded-lg bg-mDark border border-mBorder text-xs text-mGold">Clear search</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="border-t border-mBorder mt-8">
+  <div class="max-w-[1800px] mx-auto px-6 py-4 text-[11px] text-gray-600 flex flex-wrap gap-x-6 gap-y-1">
+    <span>Part I: <em>Veni, creator spiritus</em>, in Mahler&rsquo;s performance order.</span>
+    <span>Part II: Goethe, <em>Faust</em> II (Gutenberg #2230); translation Bayard Taylor, 1870&ndash;71.</span>
+    <span>Timings: Dudamel / LA Phil, DG 2021.</span>
+  </div>
+</footer>
+</div>
+
+<script>
+const { createApp, ref, computed, watch } = Vue;
+const DATA = {"structure":[{"part":"I","name":"Exposition","measures":"mm. 1–168","mLo":1,"mHi":168,"key":"E♭ major","tempo":"Allegro impetuoso","desc":"Theme I (Veni) in E♭, secondary group in D♭/A♭, closing section on Infirma from m. 141.","sections":["sec1","sec2","sec3","sec4"],"tracks":[1,2,3],"verses":[0,1,2,3]},{"part":"I","name":"Development","measures":"mm. 169–412","mLo":169,"mHi":412,"key":"C♯ minor → E major","tempo":"Allegro, etwas hastig","desc":"Six sections. Accende breakthrough at m. 262 in E major; the central Double Fugue at m. 312.","sections":["sec5","sec6","sec7","sec8","sec9","sec10_unused"],"tracks":[4,5,6],"verses":[3,4,5,6,7,8]},{"part":"I","name":"Recapitulation","measures":"mm. 413–489","mLo":413,"mHi":489,"key":"E♭ major","tempo":"Tempo I","desc":"Veni returns over an E♭ pedal; the Thought of Peace enters in counterpoint.","sections":["sec10","sec11","sec12"],"tracks":[7],"verses":[0,4,6,7,8,5]},{"part":"I","name":"Coda — Gloria","measures":"mm. 508–580","mLo":508,"mHi":580,"key":"E♭ major","tempo":"Maestoso","desc":"Doxology. Offstage brass (4 trumpets, 3 trombones) blaze the Accende theme.","sections":["sec15"],"tracks":[8],"verses":[9]},{"part":"II","name":"Orchestral Prelude","measures":"mm. 1–280","mLo":1,"mHi":280,"key":"E♭ minor","tempo":"Poco adagio","desc":"Desolate mountain clefts drawn in woodwind fragments; Più mosso from m. 140.","tracks":[9,10,11],"verses":[10,11]},{"part":"II","name":"Anchorites & Hermits","measures":"mm. 280–540","mLo":280,"mHi":540,"key":"E♭ minor → B major","tempo":"Allegro moderato","desc":"Chor und Echo, then Pater Ecstaticus and Pater Profundus. Accende foreshadowed at m. 422.","tracks":[10,11,12,13,14,15,16],"verses":[10,11,12,13,20,21,22]},{"part":"II","name":"Angels & Blessed Boys (Scherzo)","measures":"mm. 385–638","mLo":385,"mHi":638,"key":"E♭ major","tempo":"Scherzando","desc":"Faust’s immortal part borne aloft. Rose Chorus; direct quotation of the Part I Accende music.","tracks":[12,13,14,15,16,17,18],"verses":[12,10,20,21,22,24,25]},{"part":"II","name":"Doctor Marianus — Poco Adagio","measures":"mm. 580–780","mLo":580,"mHi":780,"key":"E major → E♭ major","tempo":"Poco adagio","desc":"Hier ist die Aussicht frei; the hymn to the Mater Gloriosa and the invocation of the Virgin.","tracks":[16,17,18,19,20,21],"verses":[22,24,25,26]},{"part":"II","name":"Mater Gloriosa — Adagissimo","measures":"mm. 780–860","mLo":780,"mHi":860,"key":"E major","tempo":"Äußerst langsam","desc":"Harp and harmonium religioso. The still centre of the symphony.","tracks":[21,22],"verses":[26,27]},{"part":"II","name":"The Penitents","measures":"mm. 860–1140","mLo":860,"mHi":1140,"key":"shifting","tempo":"Andante","desc":"Chor der Büßerinnen, the three biblical sinners in turn, the trio, then Gretchen’s plea.","tracks":[21,22,23,24,25,26,27],"verses":[26,27,28,29,30,31,32]},{"part":"II","name":"Gretchen & Ascent","measures":"mm. 1187–1448","mLo":1187,"mHi":1448,"key":"E♭ major","tempo":"Mosso","desc":"Blessed Boys return on Accende; Gretchen sings to the Part I Imple theme; Mater Gloriosa’s two lines.","tracks":[28,29,30,31],"verses":[33,34,35,36]},{"part":"II","name":"Chorus Mysticus — Finale","measures":"mm. 1449–1572","mLo":1449,"mHi":1572,"key":"E♭ major","tempo":"Sehr langsam beginnend","desc":"Whisper to grand climax. The Veni theme returns in the brass to close the work.","tracks":[32],"verses":[37]}],"tracks":[{"title":"Veni, creator spiritus","time":"1:21","measures":"1–30","analysis":"Exposition opening. Explosive Allegro impetuoso in E-flat major setting first couplet of Verse 1.","id":1,"part":1,"mLo":1,"mHi":30,"verses":[0]},{"title":"Imple superna gratia","time":"5:34","measures":"46–107","analysis":"Secondary section in D-flat & A-flat major. Soloists enter dolce, espressivo with Verse 2 (Qui Paraclitus).","id":2,"part":1,"mLo":46,"mHi":107,"verses":[1,2,0]},{"title":"Infirma nostri corporis","time":"7:14","measures":"141–168","analysis":"Closing section of exposition. Verse 3 first couplet with shadow-variant of Veni motif.","id":3,"part":1,"mLo":141,"mHi":168,"verses":[3]},{"title":"Tempo I. Allegro, etwas hastig","time":"8:37","measures":"169–216","analysis":"Development section 1. Instrumental interlude from far away, muted brass, low bell in A-flat. (No vocal verse.)","id":4,"part":1,"mLo":169,"mHi":216,"verses":[0]},{"title":"Infirma nostri corporis virtute firmans","time":"11:06","measures":"217–257","analysis":"Development section 2. Dark C-sharp minor variant of Verse 3 (Infirma).","id":5,"part":1,"mLo":217,"mHi":257,"verses":[3]},{"title":"Accende lumen sensibus","time":"16:24","measures":"262–412","analysis":"Development sections 3–6. The hinge of the work! Radiant E major breakthrough (Verse 4 Accende), Hostem repellas drama (Verse 5), & Double Fugue (Verses 6, 7, 8).","id":6,"part":1,"mLo":262,"mHi":412,"verses":[3,4,5,6,7,8]},{"title":"Qui Paraclitus diceris","time":"20:36","measures":"413–489","analysis":"Recapitulation. Return of Veni theme on E-flat pedal point (Verse 2); contrapuntal Thought of Peace combines lines from Verses 8, 5, 7; Verse 6 closes.","id":7,"part":1,"mLo":413,"mHi":489,"verses":[0,4,6,7,8,5]},{"title":"Gloria sit Patri Domino","time":"22:24","measures":"508–580","analysis":"Coda doxology. All verses converge; offstage brass (4 trp + 3 trb) blares the Accende theme over Verse 9.","id":8,"part":1,"mLo":508,"mHi":580,"verses":[9]},{"title":"Poco adagio","time":"5:42","measures":"1–140","analysis":"Part II Prelude. Evokes desolate mountain clefts in E-flat minor with woodwind fragments.","id":9,"part":2,"mLo":1,"mHi":140,"verses":[10]},{"title":"Più mosso. Allegro moderato","time":"9:03","measures":"140–280","analysis":"Prelude continues toward faster motion across mountain gorges.","id":10,"part":2,"mLo":140,"mHi":280,"verses":[10]},{"title":"Waldung, sie schwankt heran","time":"13:26","measures":"280–384","analysis":"Choir of anchorites. Trumpet & horn foreshadow Accende theme at m. 422.","id":11,"part":2,"mLo":280,"mHi":384,"verses":[11]},{"title":"Ewiger Wonnebrand","time":"15:05","measures":"390–430","analysis":"Pater Ecstaticus solo (Tenor). Five strophes of glowing ecstasy.","id":12,"part":2,"mLo":390,"mHi":430,"verses":[12]},{"title":"Wie Felsenabgrund mir zu Füßen","time":"19:04","measures":"430–540","analysis":"Pater Profundus solo (Bass). Accende theme sounds in three passionate statements.","id":13,"part":2,"mLo":430,"mHi":540,"verses":[13]},{"title":"Gerettet ist das edle Glied","time":"20:05","measures":"385–410","analysis":"Choir of Angels. Direct musical quotation from Part I Accende passage (mm. 262–281).","id":14,"part":2,"mLo":385,"mHi":410,"verses":[20]},{"title":"Jene Rosen, aus den Händen","time":"22:07","measures":"443–519","analysis":"Rose Chorus of younger angels. Light Scherzando texture in E-flat major.","id":15,"part":2,"mLo":443,"mHi":519,"verses":[21]},{"title":"Uns bleibt ein Erdenrest","time":"23:47","measures":"540–580","analysis":"More perfected angels. Borrowed from Part I Infirma theme (mm. 135–168).","id":16,"part":2,"mLo":540,"mHi":580,"verses":[22]},{"title":"Ich spür…","time":"24:20","measures":"580–611","analysis":"Doctor Marianus entrance & transition into chorale. DG track label \"Ich spür…\" refers to the Younger Angels' \"Spür' ich soeben\" (inverted word order) which overlaps this passage.","id":17,"part":2,"mLo":580,"mHi":611,"verses":[23,25]},{"title":"Hier ist die Aussicht frei / Freudig empfangen","time":"24:56","measures":"612–638","analysis":"Choir of Blessed Boys. Faust spiritual reincarnation theme.","id":18,"part":2,"mLo":612,"mHi":638,"verses":[25,24]},{"title":"Höchste Herrscherin der Welt","time":"27:10","measures":"639–720","analysis":"Doctor Marianus praise of Mater Gloriosa. Key shifts E major → E-flat major.","id":19,"part":2,"mLo":639,"mHi":720,"verses":[25]},{"title":"Jungfrau, rein im schönsten Sinne","time":"28:38","measures":"720–757","analysis":"Invocation of the Virgin Mother.","id":20,"part":2,"mLo":720,"mHi":757,"verses":[25]},{"title":"Äußerst langsam. Adagissimo","time":"30:09","measures":"780–860","analysis":"Mater Gloriosa floating on high. \"Äußerst langsam\" is Mahler's tempo marking (not sung text). Harp + Harmonium Religioso soundscape in E major. The verse text begins \"Um sie verschlingen sich leichte Wölkchen.\"","id":21,"part":2,"mLo":780,"mHi":860,"verses":[26]},{"title":"Dir, der Unberührbaren","time":"32:12","measures":"860–905","analysis":"Choir of Penitent Women leading to Magna Peccatrix.","id":22,"part":2,"mLo":860,"mHi":905,"verses":[26,27]},{"title":"Bei der Liebe, die den Füßen","time":"33:07","measures":"906–930","analysis":"Magna Peccatrix solo (Soprano I).","id":23,"part":2,"mLo":906,"mHi":930,"verses":[28]},{"title":"Bei dem Bronn, zu dem schon weiland","time":"34:31","measures":"930–960","analysis":"Mulier Samaritana solo (Alto I).","id":24,"part":2,"mLo":930,"mHi":960,"verses":[29]},{"title":"Bei dem hochgeweihten Orte","time":"35:33","measures":"957–990","analysis":"Maria Aegyptiaca solo (Alto II).","id":25,"part":2,"mLo":957,"mHi":990,"verses":[30]},{"title":"Die du großen Sünderinnen","time":"37:10","measures":"993–1075","analysis":"Trio of Penitent Women. Rose Chorus motif returns.","id":26,"part":2,"mLo":993,"mHi":1075,"verses":[31]},{"title":"Neige, neige, du Ohnegleiche","time":"37:50","measures":"1075–1140","analysis":"Gretchen (Una Poenitentium) plea to Mater Gloriosa.","id":27,"part":2,"mLo":1075,"mHi":1140,"verses":[32]},{"title":"Er überwächst uns schon","time":"39:05","measures":"1187–1212","analysis":"Blessed Boys second appearance. Trumpets & horns on Accende.","id":28,"part":2,"mLo":1187,"mHi":1212,"verses":[33]},{"title":"Vom edlen Geisterchor umgeben","time":"41:08","measures":"1213–1248","analysis":"Gretchen song: \"Er ahnet kaum das frische Leben\" set to Part I Imple theme.","id":29,"part":2,"mLo":1213,"mHi":1248,"verses":[34]},{"title":"Komm! hebe dich zu höhern Sphären","time":"42:16","measures":"1249–1276","analysis":"Mater Gloriosa speaks two lines dolcissimo; love theme in brass.","id":30,"part":2,"mLo":1249,"mHi":1276,"verses":[35]},{"title":"Blicket auf zum Retterblick","time":"47:45","measures":"1277–1448","analysis":"Doctor Marianus hymn & postlude with glockenspiel & tam-tam.","id":31,"part":2,"mLo":1277,"mHi":1448,"verses":[36]},{"title":"Alles Vergängliche","time":"52:52","measures":"1449–1572","analysis":"Chorus Mysticus finale. Whisper to grand climax; Veni brass quotes close the work.","id":32,"part":2,"mLo":1449,"mHi":1572,"verses":[37]}],"sections":[{"id":"sec1","name":"Exposition Main","measures":"mm. 1–45","verses":[0],"tracks":[1],"stageDir":"Chor I — Verse 1, first couplet"},{"id":"sec2","name":"Exposition Secondary","measures":"mm. 46–107","verses":[1,2],"tracks":[2],"stageDir":"Chor I — Verse 1 couplet 2 + Verse 2 (4 lines)"},{"id":"sec3","name":"Intermezzo","measures":"mm. 108–123","verses":[0],"tracks":[4],"stageDir":"Chor I — Verse 1 reprise (first line only)"},{"id":"sec4","name":"Closing Section of Exposition","measures":"mm. 141–168","verses":[3],"tracks":[3],"stageDir":"Chor I — Verse 3 couplet 1 (Infirma)"},{"id":"sec5","name":"Development, Second Section","measures":"mm. 217–257","verses":[3],"tracks":[5],"stageDir":"Chor I — Verse 3 couplet 1 (Infirma), re-composed in C♯ minor"},{"id":"sec6","name":"Development, Third Section (the breakthrough)","measures":"mm. 262–289","verses":[4],"tracks":[6],"stageDir":"Chor I — Verse 4 couplet 1 (Accende) in E major fortissimo"},{"id":"sec7","name":"Development, Fourth Section","measures":"mm. 290–311","verses":[5],"tracks":[6],"stageDir":"Chor II — Verse 5 couplet 1 (Hostem repellas), dramatic scene"},{"id":"sec8","name":"Development, Fifth Section (the Double Fugue)","measures":"mm. 312–365","verses":[6,7,8],"tracks":[6],"stageDir":"Chor I & II — Verse 6 + Verse 7 + Verse 8 (Tu septiformis, 4 lines)"},{"id":"sec9","name":"Development, Sixth Section","measures":"mm. 366–412","verses":[4],"tracks":[6],"stageDir":"Chor I — Verse 4 couplet 1 (Accende) returning"},{"id":"sec10","name":"Recapitulation, Secondary Section","measures":"mm. 432–473","verses":[2],"tracks":[7],"stageDir":"Chor I & II — Verse 2 (Qui Paraclitus diceris)"},{"id":"sec11","name":"Recapitulation — the Thought of Peace","measures":"mm. 463ff.","verses":[8,5,8,7],"tracks":[7],"stageDir":"Chor I & II — combined lines from V8 (line 1), V5 (line 2), V8 (line 2), V7 (last line)"},{"id":"sec12","name":"Recapitulation, Final Section","measures":"mm. 474–489","verses":[6],"tracks":[7],"stageDir":"Chor I & II — Verse 6 (Ductore / Vitemus)"},{"id":"sec15","name":"Coda — Gloria","measures":"mm. 508–580","verses":[9],"tracks":[8],"stageDir":"All voices — Verse 9 (Doxology); offstage brass 4 trp + 3 trb on Accende"}],"verses":[{"vid":0,"part":"I","mahler":"V1","liturgical":"Verse 1 (couplet 1)","title":"Veni, creator spiritus / Mentes tuorum visita","german":"Veni, creator spiritus,\nMentes tuorum visita.","english":"Come, Creator Spirit,\nVisit the minds of your people.","speaker":"V1 — Veni, creator spiritus / Mentes tuorum visita","stageDir":"Verse 1 (couplet 1)","tracks":[1,2,4,7],"mLo":1,"mHi":216},{"vid":1,"part":"I","mahler":"V1c2","liturgical":"Verse 1 (couplet 2)","title":"Imple superna gratia / Quæ tu creasti pectora","german":"Imple superna gratia,\nQuæ tu creasti pectora.","english":"Fill with heavenly grace\nThe hearts which you have created.","speaker":"V1c2 — Imple superna gratia / Quæ tu creasti pectora","stageDir":"Verse 1 (couplet 2)","tracks":[2],"mLo":46,"mHi":107},{"vid":2,"part":"I","mahler":"V2","liturgical":"Verse 2 (4 lines)","title":"Qui Paraclitus diceris / Donum Dei altissimi / Fons vivus, ignis, caritas / Et spiritalis unctio","german":"Qui Paraclitus diceris,\nDonum Dei altissimi,\nFons vivus, ignis, caritas,\nEt spiritalis unctio.","english":"You who are called the Paraclete,\nThe highest gift of God,\nLiving fountain, fire, love,\nAnd spiritual unction.","speaker":"V2 — Qui Paraclitus diceris / Donum Dei altissimi / Fons vivus, ignis, caritas / Et spiritalis unctio","stageDir":"Verse 2 (4 lines)","tracks":[2],"mLo":46,"mHi":489},{"vid":3,"part":"I","mahler":"V3","liturgical":"additional verse (not in standard Veni Creator Spiritus)","title":"Infirma nostri corporis / Virtute firmans perpeti","german":"Infirma nostri corporis,\nVirtute firmans perpeti.","english":"The weakness of our bodies,\nStrengthen with lasting power.","speaker":"V3 — Infirma nostri corporis / Virtute firmans perpeti","stageDir":"additional verse (not in standard Veni Creator Spiritus)","tracks":[3,5,6],"mLo":141,"mHi":257},{"vid":4,"part":"I","mahler":"V4","liturgical":"Verse 4 (couplet 1)","title":"Accende lumen sensibus / Infunde amorem cordibus","german":"Accende lumen sensibus,\nInfunde amorem cordibus.","english":"Kindle light in our senses,\nPour love into our hearts.","speaker":"V4 — Accende lumen sensibus / Infunde amorem cordibus","stageDir":"Verse 4 (couplet 1)","tracks":[6,7],"mLo":262,"mHi":412},{"vid":5,"part":"I","mahler":"V5","liturgical":"Verse 5 (couplet 1)","title":"Hostem repellas longius / Pacemque dones protinus","german":"Hostem repellas longius,\nPacemque dones protinus.","english":"Drive the enemy far away,\nAnd grant us peace at once.","speaker":"V5 — Hostem repellas longius / Pacemque dones protinus","stageDir":"Verse 5 (couplet 1)","tracks":[6,7],"mLo":262,"mHi":489},{"vid":6,"part":"I","mahler":"V6","liturgical":"Verse 6 (couplet 1)","title":"Ductore sic te praevio / Vitemus omne [noxium]","german":"Ductore sic te praevio,\nVitemus omne noxium.","english":"Under your guidance, may we so\nSee all that harms us flee away.","note":"Mahler's \"noxium\" replaces the standard \"pessimum\".","speaker":"V6 — Ductore sic te praevio / Vitemus omne [noxium]","stageDir":"Verse 6 (couplet 1)","tracks":[6,7],"mLo":262,"mHi":489},{"vid":7,"part":"I","mahler":"V7","liturgical":"Verse 7 (4 lines)","title":"Per te sciamus da Patrem / Noscamus atque filium / Teque utriusque Spiritum / Credamus omni tempore","german":"Per te sciamus da Patrem,\nNoscamus atque filium,\nTeque utriusque Spiritum,\nCredamus omni tempore.","english":"Through you may we know the Father,\nAnd also come to know the Son,\nAnd may we believe in you,\nThe Spirit of them both, at all times.","speaker":"V7 — Per te sciamus da Patrem / Noscamus atque filium / Teque utriusque Spiritum / Credamus omni tempore","stageDir":"Verse 7 (4 lines)","tracks":[6,7],"mLo":262,"mHi":489},{"vid":8,"part":"I","mahler":"V8","liturgical":"Verse 3 (Tu septiformis, 4 lines)","title":"Tu septiformis munere / Digitus paternae dexterae / Tu rite promissum Patris / Sermone ditans guttura","german":"Tu septiformis munere,\nDigitus paternae dexterae,\nTu rite promissum Patris,\nSermone ditans guttura.","english":"You, sevenfold in gifts,\nFinger of the Father's right hand,\nYou, the Father's promised One,\nEnriching our tongues with speech.","note":"Confirmed in the Double Fugue (mm. 312–365) — a recent correction to the chapter OCR.","speaker":"V8 — Tu septiformis munere / Digitus paternae dexterae / Tu rite promissum Patris / Sermone ditans guttura","stageDir":"Verse 3 (Tu septiformis, 4 lines)","tracks":[6,7],"mLo":262,"mHi":489},{"vid":9,"part":"I","mahler":"V9","liturgical":"Verse 8 (Doxology, 4 lines)","title":"Gloria Patri Domino / Natoque, qui a mortuis / Surrexit, ac Paraclito / In saeculorum saecula","german":"Gloria Patri Domino,\nNatoque, qui a mortuis\nSurrexit, ac Paraclito,\nIn saeculorum saecula.","english":"Glory be to the Father, the Lord,\nAnd to the Son, who from the dead\nHas risen, and to the Paraclete,\nFor ages of ages.","speaker":"V9 — Gloria Patri Domino / Natoque, qui a mortuis / Surrexit, ac Paraclito / In saeculorum saecula","stageDir":"Verse 8 (Doxology, 4 lines)","tracks":[8],"mLo":508,"mHi":580},{"part":"II","idx":1,"speaker":"Bergschluchten / Mountain Gorges, Forest, Rock, Desert","stageDir":"","german":"Bergschluchten","english":"Mountain Gorges. Forest, Rock, Desert. Holy Anchorites, divided in ascending planes, posted among the ravines.","tracks":[9,10],"mLo":1,"mHi":280,"vid":10},{"part":"II","idx":2,"speaker":"CHOR UND ECHO / Chorus and Echo","stageDir":"","german":"Waldung, sie schwankt heran,\nFelsen, sie lasten dran,\nWurzeln, sie klammern an,\nStamm dicht an Stamm hinan,\nWoge nach Woge spritzt,\nHöhle, die tiefste, schützt.\nLöwen, sie schleichen stumm,\nFreundlich um uns herum,\nEhren geweihten Ort,\nHeiligen Liebeshort.","english":"Forests are waving grand,\nRocks, they are huge at hand,\nClutching, the roots expand,\nThickly the tree-trunks stand;\nFoaming comes wave on wave;\nShelter hath deepest cave;\nLions are prowling dumb,\nFriendly where'er we come,\nHonoring the sacred place,\nRefuge of Love and Grace!","tracks":[11],"mLo":280,"mHi":384,"vid":11},{"part":"II","idx":3,"speaker":"PATER ECSTATICUS","stageDir":"hovering up and down","german":"Ewiger Wonnebrand,\nGlühendes Liebeband,\nSiedender Schmerz der Brust,\nSchäumende Gotteslust.\nPfeile, durchdringet mich,\nLanzen, bezwinget mich,\nKeulen, zerschmettert mich,\nBlitze, durchwettert mich!\nDaß ja das Nichtige\nAlles verflüchtige,\nGlänze der Dauerstern,\nEwiger Liebe Kern.","english":"Endless ecstatic fire,\nGlow of the pure desire,\nPain of the pining breast,\nRapture of God possessed!\nArrows, transpierce ye me,\nLances, coerce ye me,\nBludgeons, so batter me,\nLightnings, so shatter me,\nThat all of mortality's\nVain unrealities\nDie, and the Star above\nBeam but Eternal Love!","tracks":[12],"mLo":390,"mHi":430,"vid":12},{"part":"II","idx":4,"speaker":"PATER PROFUNDUS","stageDir":"Lower Region","german":"Wie Felsenabgrund mir zu Füßen\nAuf tiefem Abgrund lastend ruht,\nWie tausend Bäche strahlend fließen\nZum grausen Sturz des Schaums der Flut,\nWie strack mit eignem kräftigen Triebe\nDer Stamm sich in die Lüfte trägt:\nSo ist es die allmächtige Liebe,\nDie alles bildet, alles hegt.\nIst um mich her ein wildes Brausen,\nAls wogte Wald und Felsengrund,\nUnd doch stürzt, liebevoll im Sausen,\nDie Wasserfülle sich zum Schlund,\nBerufen, gleich das Tal zu wässern;\nDer Blitz, der flammend niederschlug,\nDie Atmosphäre zu verbessern,\nDie Gift und Dunst im Busen trug —\nSind Liebesboten, sie verkünden,\nWas ewig schaffend uns umwallt.\nMein Innres mög' es auch entzünden,\nWo sich der Geist, verworren, kalt,\nVerquält in stumpfer Sinne Schranken,\nScharfangeschloßnem Kettenschmerz.\nO Gott! beschwichtige die Gedanken,\nErleuchte mein bedürftig Herz!","english":"As at my feet abysses cloven\nRest on abysses deep below;\nAs thousand severed streams are woven\nTo foamy floods that plunging go;\nAs, up by self-impulsion driven,\nThe tree its weight sustains in air,\nTo Love, almighty Love, 't is given\nAll things to form, and all to bear.\nAround me sounds a savage roaring,\nAs rocks and forests heaved and swayed,\nYet plunges, bounteous in its pouring,\nThe wealth of waters down the glade,\nAppointed, then, the vales to brighten;\nThe bolt, that flaming struck and burst,\nThe atmosphere to cleanse and lighten,\nWhich pestilence in its bosom nursed, —\nLove's heralds both, the powers proclaiming,\nWhich, aye creative, us infold.\nMay they, within my bosom flaming,\nInspire the mind, confused and cold,\nWhich frets itself, through blunted senses,\nAs by the sharpest fetter-smart!\nO God, soothe Thou my thoughts bewildered,\nEnlighten Thou my needy heart!","tracks":[13],"mLo":430,"mHi":540,"vid":13},{"part":"II","idx":5,"speaker":"PATER SERAPHICUS","stageDir":"Middle Region","german":"Welch ein Morgenwölkchen schwebet\nDurch der Tannen schwankend Haar!\nAhn' ich, was im Innern lebet?\nEs ist junge Geisterschar.","english":"What a cloud of morning hovers\nO'er the pine-trees' tossing hair!\nCan I guess what life it covers?\nThey are spirits, young and fair.","tracks":[],"mLo":0,"mHi":0,"vid":14},{"part":"II","idx":6,"speaker":"CHOR SELIGER KNABEN / Chorus of Blessed Boys","stageDir":"First","german":"Sag uns, Vater, wo wir wallen,\nSag uns, Guter, wer wir sind?\nGlücklich sind wir: allen, allen\nIst das Dasein so gelind.","english":"Tell us, Father, where we wander;\nTell us, Kind One, who are we.\nHappy are we; for so tender\nUnto all, it is, To Be.","tracks":[],"mLo":0,"mHi":0,"vid":15},{"part":"II","idx":7,"speaker":"PATER SERAPHICUS","stageDir":"continued","german":"Knaben! Mitternachts-Geborne,\nHalb erschlossen Geist und Sinn,\nFür die Eltern gleich Verlorne,\nFür die Engel zum Gewinn.\nDaß ein Liebender zugegen,\nFühlt ihr wohl, so naht euch nur;\nDoch von schroffen Erdewegen,\nGlückliche! habt ihr keine Spur.\nSteigt herab in meiner Augen\nWelt- und erdgemäß Organ,\nKönnt sie als die euren brauchen,\nSchaut euch diese Gegend an!\nDas sind Bäume, das sind Felsen,\nWasserstrom, der abestürzt\nUnd mit ungeheurem Wälzen\nSich den steilen Weg verkürzt.","english":"Boys, brought forth in midnights haunted,\nHalf-unsealed the sense and brain,\nFor the parents lost when granted,\nFor the angels sweetest gain!\nThat a loving heart is nigh you\nYou can feel: then come to me!\nBut of earthly ways that try you,\nBlest ones! not a trace have ye.\nEnter in mine eyes: enjoy them,\nOrgans for the earthly sphere!\nAs your own ye may employ them:\nLook upon the landscape here!\nThose are trees, there rocks defend us;\nHere, a stream that leaps below,\nAnd with plunges, wild, tremendous,\nShorteneth its journey so.","tracks":[],"mLo":0,"mHi":0,"vid":16},{"part":"II","idx":8,"speaker":"SELIGE KNABEN / Blessed Boys","stageDir":"from within him","german":"Das ist mächtig anzuschauen,\nDoch zu düster ist der Ort,\nSchüttelt uns mit Schreck und Grauen.\nEdler, Guter, laß uns fort!","english":"To a vision grand we waken,\nBut the scenes too gloomy show;\nWe with fear and dread are shaken:\nKindest Father, let us go!","tracks":[],"mLo":0,"mHi":0,"vid":17},{"part":"II","idx":9,"speaker":"PATER SERAPHICUS","stageDir":"closing","german":"Steigt hinan zu höherm Kreise,\nWachset immer unvermerkt,\nWie, nach ewig reiner Weise,\nGottes Gegenwart verstärkt.\nDenn das ist der Geister Nahrung,\nDie im freisten Äther waltet:\nEwigen Liebens Offenbarung,\nDie zur Seligkeit entfaltet.","english":"Upward rise to higher borders!\nEver grow, insensibly,\nAs, by pure, eternal orders,\nGod's high Presence strengthens ye!\nSuch the Spirits' sustentation,\nWith the freest ether blending;\nLove's eternal Revelation,\nTo Beatitude ascending.","tracks":[],"mLo":0,"mHi":0,"vid":18},{"part":"II","idx":10,"speaker":"CHOR SELIGER KNABEN","stageDir":"Second — circled around the highest summit","german":"Hände verschlinget\nFreudig zum Ringverein,\nRegt euch und singet\nHeil'ge Gefühle drein!\nGöttlich belehret,\nDürft ihr vertrauen;\nDen ihr verehret,\nWerdet ihr schauen.","english":"Hands now enring ye,\nJoyously wheeling!\nSoar ye and sing ye,\nWith holiest feeling!\nThe Teacher before ye,\nTrust, and be bold!\nWhom ye adore, ye\nHim shall behold.","tracks":[],"mLo":0,"mHi":0,"vid":19},{"part":"II","idx":11,"speaker":"ENGEL / Angels","stageDir":"soaring in the higher atmosphere, bearing the immortal part of Faust","german":"Gerettet ist das edle Glied\nDer Geisterwelt vom Bösen,\nWer immer strebend sich bemüht,\nDen können wir erlösen.\nUnd hat an ihm die Liebe gar\nVon oben teilgenommen,\nBegegnet ihm die selige Schar\nMit herzlichem Willkommen.","english":"The noble Spirit now is free,\nAnd saved from evil scheming:\nWhoe'er aspires unweariedly\nIs not beyond redeeming.\nAnd if he feels the grace of Love\nThat from On High is given,\nThe Blessed Hosts, that wait above,\nShall welcome him to Heaven!","tracks":[14],"mLo":385,"mHi":410,"vid":20},{"part":"II","idx":12,"speaker":"DIE JÜNGEREN ENGEL / The Younger Angels","stageDir":"First — Rose Chorus / Scherzo","german":"Jene Rosen aus den Händen\nLiebend-heiliger Büßerinnen\nHalfen uns den Sieg gewinnen,\nUns das hohe Werk vollenden,\nDiesen Seelenschatz erbeuten.\nBöse wichen, als wir streuten,\nTeufel flohen, als wir trafen.\nStatt gewohnter Höllenstrafen\nFühlten Liebesqual die Geister;\nSelbst der alte Satansmeister\nWar von spitzer Pein durchdrungen.\nJauchzet auf! es ist gelungen.","english":"They, the roses, freely spended\nBy the penitent, the glorious,\nHelped to make the fight victorious,\nAnd the lofty work is ended.\nWe this precious Soul have won us;\nEvil ones we forced to shun us;\nDevils fled us, when we hit them;\n'Stead of pangs of Hell, that bit them,\nLove-pangs felt they, sharper, vaster:\nEven he, old Satan-Master,\nPierced with keenest pain, retreated.\nNow rejoice! The work's completed!","tracks":[15],"mLo":443,"mHi":519,"vid":21},{"part":"II","idx":13,"speaker":"DIE VOLLENDETEREN ENGEL / The More Perfect Angels","stageDir":"","german":"Uns bleibt ein Erdenrest\nZu tragen peinlich,\nUnd wär' er von Asbest,\nEr ist nicht reinlich.\nWenn starke Geisteskraft\nDie Elemente\nAn sich herangerafft,\nKein Engel trennte\nGeeinte Zwienatur\nDer innigen beiden,\nDie ewige Liebe nur\nVermag's zu scheiden.","english":"Earth's residue to bear\nHath sorely pressed us;\nIt were not pure and fair,\nThough 't were asbestus.\nWhen every element\nThe mind's high forces\nHave seized, subdued, and blent,\nNo Angel divorces\nTwin-natures single grown,\nThat inly mate them:\nEternal Love, alone,\nCan separate them.","tracks":[16],"mLo":540,"mHi":580,"vid":22},{"part":"II","idx":14,"speaker":"DIE JÜNGEREN ENGEL","stageDir":"Second","german":"Nebelnd um Felsenhöh'\nSpür' ich soeben,\nRegend sich in der Näh',\nEin Geisterleben.\nDie Wölkchen werden klar,\nIch seh' bewegte Schar\nSeliger Knaben,\nLos von der Erde Druck,\nIm Kreis gesellt,\nDie sich erlaben\nAm neuen Lenz und Schmuck\nDer obern Welt.\nSei er zum Anbeginn,\nSteigendem Vollgewinn\nDiesen gesellt!","english":"Mist-like on heights above,\nWe now are seeing\nNearer and nearer move\nSpiritual Being.\nThe clouds are growing clear;\nAnd moving throngs appear\nOf Blessed Boys,\nFree from the earthly gloom,\nIn circling poise,\nWho taste the cheer\nOf the new spring-time bloom\nOf the upper sphere.\nLet them inaugurate\nHim to the perfect state,\nNow, as their peer!","tracks":[],"mLo":0,"mHi":0,"vid":23},{"part":"II","idx":15,"speaker":"DIE SELIGEN KNABEN / The Blessed Boys","stageDir":"response","german":"Freudig empfangen wir\nDiesen im Puppenstand;\nAlso erlangen wir\nEnglisches Unterpfand.\nLöset die Flocken los,\nDie ihn umgeben!\nSchon ist er schön und groß\nVon heiligem Leben.","english":"Gladly receive we now\nHim, as a chrysalis:\nTherefore achieve we now\nPledge of our bliss.\nThe earth-flakes dissipate\nThat cling around him!\nSee, he is fair and great!\nDivine Life hath crowned him.","tracks":[18],"mLo":612,"mHi":638,"vid":24},{"part":"II","idx":16,"speaker":"DOCTOR MARIANUS","stageDir":"in the highest, purest cell","german":"Hier ist die Aussicht frei,\nDer Geist erhoben.\nDort ziehen Fraun vorbei,\nSchwebend nach oben.\nDie Herrliche mitteninn\nIm Sternenkranze,\nDie Himmelskönigin,\nIch seh's am Glanze.\nHöchste Herrscherin der Welt!\nLasse mich im blauen,\nAusgespannten Himmelszelt\nDein Geheimnis schauen.\nBillige, was des Mannes Brust\nErnst und zart beweget\nUnd mit heiliger Liebeslust\nDir entgegenträget.\nUnbezwinglich unser Mut,\nWenn du hehr gebietest;\nPlötzlich mildert sich die Glut,\nWie du uns befriedest.\nJungfrau, rein im schönsten Sinn,\nMutter, Ehren würdig,\nUns erwählte Königin,\nGöttern ebenbürtig.","english":"Free is the view at last,\nThe spirit lifted:\nThere women, floating past,\nAre upward drifted:\nThe Glorious One therein,\nWith star-crown tender, —\nThe pure, the Heavenly Queen,\nI know her splendor.\nHighest Mistress of the World!\nLet me in the azure\nTent of Heaven, in light unfurled,\nHere thy Mystery measure!\nJustify sweet thoughts that move\nBreast of man to meet thee,\nAnd with holy bliss of love\nBear him up to greet thee!\nWith unconquered courage we\nDo thy bidding highest;\nBut at once shall gentle be,\nWhen thou pacifiest.\nVirgin, pure in brightest sheen,\nMother sweet, supernal, —\nUnto us Elected Queen,\nPeer of Gods Eternal!","tracks":[17,19,20],"mLo":580,"mHi":757,"vid":25},{"part":"II","idx":17,"speaker":"DOCTOR MARIANUS AND CHORUS","stageDir":"the Mater Gloriosa soars into the space","german":"Um sie verschlingen\nSich leichte Wölkchen,\nSind Büßerinnen,\nEin zartes Völkchen,\nUm ihre Kniee\nDen Äther schlürfend,\nGnade bedürfend.\nDir, der Unberührbaren,\nIst es nicht benommen,\nDass die leicht Verführbaren\nTraulich zu dir kommen.\nIn die Schwachheit hingerafft,\nSind sie schwer zu retten;\nWer zerreißt aus eigner Kraft\nDer Gelüste Ketten?\nWie entgleitet schnell der Fuß\nSchiefem, glattem Boden?\nWen betört nicht Blick und Gruß,\nSchmeichelhafter Odem?","english":"Light clouds are circling\nAround her splendor, —\nPenitent women\nOf natures tender,\nHer knees embracing,\nEther respiring,\nMercy requiring!\nThou, in immaculate ray,\nMercy not leavest,\nAnd the lightly led astray,\nWho trust thee, receivest!\nIn their weakness fallen at length,\nHard it is to save them:\nWho can crush, by native strength,\nVices that enslave them?\nWhose the foot that may not slip\nOn the surface slanting?\nWhom befool not eye and lip,\nBreath and voice enchanting?","tracks":[21,22],"mLo":780,"mHi":905,"vid":26},{"part":"II","idx":18,"speaker":"CHOR DER BÜSSERINNEN / Chorus of Women Penitents","stageDir":"","german":"Du schwebst zu Höhen\nDer ewigen Reiche,\nVernimm das Flehen,\nDu Ohnegleiche,\nDu Gnadenreiche!","english":"To heights thou'rt speeding\nOf endless Eden:\nReceive our pleading,\nTranscendent Maiden,\nWith Mercy laden!","tracks":[22],"mLo":860,"mHi":905,"vid":27},{"part":"II","idx":19,"speaker":"MAGNA PECCATRIX","stageDir":"St. Luke vii. 36","german":"Bei der Liebe, die den Füßen\nDeines gottverklärten Sohnes\nTränen ließ zum Balsam fließen,\nTrotz des Pharisäerhohnes;\nBeim Gefäße, das so reichlich\nTropfte Wohlgeruch hernieder,\nBei den Locken, die so weichlich\nTrockneten die heil'gen Glieder —","english":"By the love before him kneeling, —\nHim, Thy Son, a godlike vision;\nBy the tears like balsam stealing,\nSpite of Pharisees' derision;\nBy the box, whose ointment precious\nShed its spice and odors cheery;\nBy the locks, whose softest meshes\nDried the holy feet and weary! —","tracks":[23],"mLo":906,"mHi":930,"vid":28},{"part":"II","idx":20,"speaker":"MULIER SAMARITANA","stageDir":"St. John iv","german":"Bei dem Bronn, zu dem schon weiland\nAbram ließ die Herde führen,\nBei dem Eimer, der dem Heiland\nKühl die Lippe durft' berühren;\nBei der reinen, reichen Quelle,\nDie nun dorther sich ergießet,\nÜberflüssig, ewig helle\nRings durch alle Welten fließet —","english":"By that well, the ancient station\nWhither Abram's flocks were driven;\nBy the jar, whose restoration\nTo the Saviour's lips was given;\nBy the fountain, pure and vernal,\nThence its present bounty spending, —\nOverflowing, bright, eternal,\nWatering the worlds unending! —","tracks":[24],"mLo":930,"mHi":960,"vid":29},{"part":"II","idx":21,"speaker":"MARIA AEGYPTIACA","stageDir":"Acta Sanctorum","german":"Bei dem hochgeweihten Orte,\nWo den Herrn man niederließ,\nBei dem Arm, der von der Pforte\nWarnend mich zurücke stieß;\nBei der vierzigjährigen Buße,\nDer ich treu in Wüsten blieb,\nBei dem seligen Scheidegruße,\nDen im Sand ich niederschrieb —","english":"By the place, where the Immortal\nBody of the Lord hath lain;\nBy the arm, which, from the portal,\nWarning, thrust me back again;\nBy the forty years' repentance\nIn the lonely desert-land;\nBy the blissful farewell sentence\nWhich I wrote upon the sand! —","tracks":[25],"mLo":957,"mHi":990,"vid":30},{"part":"II","idx":22,"speaker":"ZU DREI / The Three","stageDir":"","german":"Die du großen Sünderinnen\nDeine Nähe nicht verweigerst\nUnd ein büßendes Gewinnen\nIn die Ewigkeiten steigerst,\nGönn auch dieser guten Seele,\nDie sich einmal nur vergessen,\nDie nicht ahnte, daß sie fehlte,\nDein Verzeihen angemessen!","english":"Thou Thy presence not deniest\nUnto sinful women ever, —\nLiftest them to win the highest\nGain of penitent endeavor, —\nSo, from this good soul withdraw not —\nWho but once forgot, transgressing,\nWho her loving error saw not —\nPardon adequate, and blessing!","tracks":[26],"mLo":993,"mHi":1075,"vid":31},{"part":"II","idx":23,"speaker":"UNA POENITENTIUM, SONST GRETCHEN GENANNT","stageDir":"formerly named Margaret, stealing closer","german":"Neige, neige,\nDu Ohnegleiche,\nDu Strahlenreiche,\nDein Antlitz gnädig meinem Glück!\nDer früh Geliebte,\nNicht mehr Getrübte,\nEr kommt zurück.","english":"Incline, O Maiden,\nWith Mercy laden,\nIn light unfading,\nThy gracious countenance upon my bliss!\nMy loved, my lover,\nHis trials over\nIn yonder world, returns to me in this!","tracks":[27],"mLo":1075,"mHi":1140,"vid":32},{"part":"II","idx":24,"speaker":"SELIGE KNABEN / Blessed Boys","stageDir":"approaching in hovering circles","german":"Er überwächst uns schon\nAn mächtigen Gliedern,\nWird treuer Pflege Lohn\nReichlich erwidern.\nWir wurden früh entfernt\nVon Lebechören;\nDoch dieser hat gelernt,\nEr wird uns lehren.","english":"With mighty limbs he towers\nAlready above us;\nHe, for this love of ours,\nWill richlier love us.\nEarly were we removed,\nEre Life could reach us;\nYet he hath learned and proved,\nAnd he will teach us.","tracks":[28],"mLo":1187,"mHi":1212,"vid":33},{"part":"II","idx":25,"speaker":"DIE EINE BÜSSERIN, SONST GRETCHEN GENANNT / The Penitent (formerly named Margaret)","stageDir":"","german":"Vom edlen Geisterchor umgeben,\nWird sich der Neue kaum gewahr,\nEr ahnet kaum das frische Leben,\nSo gleicht er schon der heiligen Schar.\nSieh, wie er jedem Erdenbande\nDer alten Hülle sich entrafft\nUnd aus ätherischem Gewande\nHervortritt erste Jugendkraft.\nVergönne mir, ihn zu belehren,\nNoch blendet ihn der neue Tag.","english":"The spirit-choir around him seeing,\nNew to himself, he scarce divines\nHis heritage of new-born Being,\nWhen like the Holy Host he shines.\nBehold, how he each band hath cloven,\nThe earthly life had round him thrown,\nAnd through his garb, of ether woven,\nThe early force of youth is shown!\nVouchsafe to me that I instruct him!\nStill dazzles him the Day's new glare.","tracks":[29],"mLo":1213,"mHi":1248,"vid":34},{"part":"II","idx":26,"speaker":"MATER GLORIOSA","stageDir":"floating above","german":"Komm! hebe dich zu höhern Sphären!\nWenn er dich ahnet, folgt er nach.","english":"Rise, thou, to higher spheres!\nConduct him, Who, feeling thee, shall follow there.","tracks":[30],"mLo":1249,"mHi":1276,"vid":35},{"part":"II","idx":27,"speaker":"DOCTOR MARIANUS","stageDir":"prostrate, adoring","german":"Blicket auf zum Retterblick,\nAlle reuig Zarten,\nEuch zu seligem Geschick\nDankend umzuarten.\nWerde jeder beßre Sinn\nDir zum Dienst erbötig;\nJungfrau, Mutter, Königin,\nGöttin, bleibe gnädig!","english":"Penitents, look up, elate,\nWhere she beams salvation;\nGratefully to blessed fate\nGrow, in re-creation!\nBe our souls, as they have been,\nDedicate to Thee!\nVirgin Holy, Mother, Queen,\nGoddess, gracious be!","tracks":[31],"mLo":1277,"mHi":1448,"vid":36},{"part":"II","idx":28,"speaker":"CHORUS MYSTICUS","stageDir":"","german":"Alles Vergängliche\nIst nur ein Gleichnis;\nDas Unzulängliche,\nHier wird's Ereignis;\nDas Unbeschreibliche,\nHier ist's getan;\nDas Ewig-Weibliche\nZieht uns hinan.","english":"All things transitory\nBut as symbols are sent:\nEarth's insufficiency\nHere grows to Event:\nThe Indescribable,\nHere it is done:\nThe Woman-Soul leadeth us\nUpward and on!","tracks":[32],"mLo":1449,"mHi":1572,"vid":37}]};
+
+createApp({
+  setup() {
+    const part = ref('I');
+    const q = ref('');
+    const showEN = ref(true);
+    const activeTrack = ref(null);
+    const activeVerses = ref([]);
+    const activeSpan = ref(null);
+    const flashed = ref(null);
+
+    const spans = computed(() => DATA.structure.filter(s => s.part === part.value));
+    const partTracks = computed(() => DATA.tracks.filter(t => t.part === (part.value === 'I' ? 1 : 2)));
+    const partVerses = computed(() => DATA.verses.filter(v => v.part === part.value));
+
+    const norm = s => (s || '').toLowerCase();
+    const shownVerses = computed(() => {
+      if (!q.value.trim()) return partVerses.value;
+      const k = norm(q.value);
+      return partVerses.value.filter(v =>
+        norm(v.speaker).includes(k) || norm(v.stageDir).includes(k) ||
+        norm(v.german).includes(k) || norm(v.english).includes(k));
+    });
+    const shownTracks = computed(() => {
+      if (!q.value.trim()) return partTracks.value;
+      const ids = new Set();
+      shownVerses.value.forEach(v => v.tracks.forEach(t => ids.add(t)));
+      const k = norm(q.value);
+      return partTracks.value.filter(t =>
+        ids.has(t.id) || norm(t.title).includes(k) || norm(t.analysis).includes(k) || norm(t.measures).includes(k));
+    });
+
+    const trackById = id => DATA.tracks.find(t => t.id === id) || { title:'', time:'' };
+
+    const flash = vid => {
+      flashed.value = vid;
+      setTimeout(() => { if (flashed.value === vid) flashed.value = null; }, 1500);
+    };
+    const scrollTo = (sel) => {
+      const el = document.querySelector(sel);
+      if (el) el.scrollIntoView({ behavior:'smooth', block: sel.startsWith('#v') ? 'start' : 'nearest' });
+    };
+
+    // track -> first linked verse
+    const pickTrack = t => {
+      activeTrack.value = activeTrack.value === t.id ? null : t.id;
+      if (activeTrack.value && t.verses.length) {
+        activeVerses.value = [...t.verses];
+        t.verses.forEach(vid => flash(vid));
+        requestAnimationFrame(() => scrollTo('#v' + t.verses[0]));
+      } else {
+        activeVerses.value = [];
+      }
+    };
+    // verse badge -> track
+    const jumpTrack = id => {
+      activeTrack.value = id;
+      requestAnimationFrame(() => scrollTo('#tr' + id));
+    };
+    // structure span -> first track + first verse
+    const gotoSpan = s => {
+      activeSpan.value = activeSpan.value === s.name ? null : s.name;
+      if (!activeSpan.value) return;
+      if (s.tracks.length) { activeTrack.value = s.tracks[0]; scrollTo('#tr' + s.tracks[0]); }
+      if (s.verses.length) {
+        activeVerses.value = [...s.verses];
+        s.verses.forEach(vid => flash(vid));
+        requestAnimationFrame(() => scrollTo('#v' + s.verses[0]));
+      }
+    };
+    const setPart = p => {
+      part.value = p;
+      activeTrack.value = activeSpan.value = null;
+      activeVerses.value = [];
+      window.scrollTo({ top:0, behavior:'smooth' });
+    };
+
+    return { part, q, showEN, activeTrack, activeVerses, activeSpan, flashed,
+             spans, partTracks, partVerses, shownVerses, shownTracks,
+             trackById, pickTrack, jumpTrack, gotoSpan, setPart };
+  }
+}).mount('#app');
+</script>
+</body>
+</html>

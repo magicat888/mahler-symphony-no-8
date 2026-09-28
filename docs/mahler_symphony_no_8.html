@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahler: Symphony No. 8 — Digital Research & Performance Companion</title>
+    <meta name="description" content="Digital research and performance companion for Mahler's Symphony No. 8 in E-flat Major. Analysis, recordings, roles, motifs, parallel text, historical context, and interactive quiz.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mahler: {
+                            gold: '#d4af37',
+                            goldLight: '#f3e5ab',
+                            goldDark: '#997a15',
+                            burgundy: '#4a0e17',
+                            darkBg: '#0f0e13',
+                            cardBg: '#18161f',
+                            cardBorder: '#2d2938',
+                            accentRed: '#8b0000',
+                            accentBlue: '#1e3a8a',
+                            cream: '#fdfbf7',
+                            muted: '#9ca3af'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Cinzel', 'serif'],
+                        body: ['Plus Jakarta Sans', 'sans-serif'],
+                        literary: ['Newsreader', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0f0e13;
+            color: #fdfbf7;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #fff3cd 0%, #d4af37 50%, #aa7c11 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-border-glow {
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #18161f;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #3d374d;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #d4af37;
+        [v-cloak] { display: none !important; }
+        }
+    </style>
+</head>
+<body class="selection:bg-mahler-gold selection:text-mahler-darkBg min-h-screen flex flex-col antialiased">
+<noscript>
+<div style="max-width:800px;margin:2em auto;padding:1em;font-family:Georgia,serif;color:#ccc;background:#111">
+<h1>Mahler: Symphony No. 8 in E-flat Major</h1>
+<p>Digital Research & Performance Companion</p>
+<p>This interactive companion requires a JavaScript-enabled browser to display the tabbed interface (overview, structure, tracks, roles, motifs, text, history, quiz). Open this file in Chrome, Safari, or Firefox.</p>
+</div>
+</noscript>
+
+    <div id="app" v-cloak class="flex-grow flex flex-col min-h-screen">
+        <!-- Top Navigation Bar -->
+        <header class="sticky top-0 z-50 bg-mahler-darkBg/95 backdrop-blur-md border-b border-mahler-cardBorder">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-20">
+                    <div class="flex items-center gap-3 cursor-pointer" @click="activeTab = 'overview'">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-mahler-goldDark to-mahler-gold flex items-center justify-center text-mahler-darkBg font-bold font-serif text-xl shadow-lg">
+                            VIII
+                        </div>
+                        <div>
+                            <span class="font-serif font-bold text-lg sm:text-xl tracking-wider block gold-gradient-text">MAHLER VIII</span>
+                            <span class="text-xs text-mahler-muted tracking-widest uppercase block -mt-1">Symphony of a Thousand</span>
+                        </div>
+                    </div>
+
+                    <!-- Desktop Nav Links -->
+                    <nav class="hidden lg:flex items-center space-x-1">
+                        <button v-for="tab in tabs" :key="tab.id" 
+                                @click="activeTab = tab.id"
+                                :class="[
+                                    'px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2',
+                                    activeTab === tab.id 
+                                        ? 'bg-mahler-gold/15 text-mahler-gold border border-mahler-gold/40 shadow-sm' 
+                                        : 'text-gray-300 hover:text-white hover:bg-mahler-cardBg'
+                                ]">
+                            <i :class="tab.icon"></i>
+                            <span>{{ tab.name }}</span>
+                        </button>
+                    </nav>
+
+                    <!-- Mobile Menu Button -->
+                    <div class="lg:hidden flex items-center">
+                        <button @click="mobileMenuOpen = !mobileMenuOpen" class="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-mahler-cardBg">
+                            <i :class="mobileMenuOpen ? 'fas fa-times text-xl' : 'fas fa-bars text-xl'"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Dropdown Menu -->
+            <div v-if="mobileMenuOpen" class="lg:hidden bg-mahler-cardBg border-b border-mahler-cardBorder px-4 pt-2 pb-4 space-y-1">
+                <button v-for="tab in tabs" :key="tab.id"
+                        @click="activeTab = tab.id; mobileMenuOpen = false"
+                        :class="[
+                            'w-full text-left px-4 py-3 rounded-lg text-base font-medium flex items-center gap-3',
+                            activeTab === tab.id ? 'bg-mahler-gold/20 text-mahler-gold' : 'text-gray-300 hover:bg-mahler-darkBg'
+                        ]">
+                    <i :class="tab.icon + ' w-5 text-center'"></i>
+                    <span>{{ tab.name }}</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Body Area -->
+        <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+            <!-- TAB 1: OVERVIEW -->
+            <section v-if="activeTab === 'overview'" class="space-y-12">
+                <!-- Hero Header -->
+                <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-mahler-burgundy/40 via-mahler-cardBg to-mahler-darkBg border border-mahler-gold/20 p-8 sm:p-12 shadow-2xl">
+                    <div class="absolute -right-20 -top-20 w-96 h-96 bg-mahler-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+                    
+                    <div class="relative z-10 max-w-3xl space-y-6">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-mahler-gold/10 border border-mahler-gold/30 text-mahler-gold text-xs font-semibold uppercase tracking-widest">
+                            <i class="fas fa-crown text-xs"></i> Monumental Choral Symphony
+                        </div>
+                        <h1 class="text-4xl sm:text-6xl font-serif font-extrabold tracking-tight text-white leading-tight">
+                            Symphony No. 8 <br>
+                            <span class="gold-gradient-text">in E-flat Major</span>
+                        </h1>
+                        <p class="text-sm sm:text-base text-gray-400 font-body tracking-wide mt-1">Digital Research & Performance Companion</p>
+                        <p class="text-lg text-gray-300 font-literary italic leading-relaxed">
+                            "Imagine that the universe begins to sound and ring out. There are no longer human voices, but planets and suns revolving."
+                            <span class="block text-sm font-body not-italic text-mahler-gold mt-2">— Gustav Mahler to Willem Mengelberg, August 1906</span>
+                        </p>
+                        
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-mahler-cardBorder/60">
+                            <div class="bg-mahler-darkBg/60 p-4 rounded-xl border border-mahler-cardBorder">
+                                <span class="text-xs uppercase text-mahler-muted font-bold block">Composed</span>
+                                <span class="text-lg font-serif font-bold text-white">Summer 1906</span>
+                                <span class="text-xs text-gray-400 block">Maiernigg (10 weeks)</span>
+                            </div>
+                            <div class="bg-mahler-darkBg/60 p-4 rounded-xl border border-mahler-cardBorder">
+                                <span class="text-xs uppercase text-mahler-muted font-bold block">Premiere</span>
+                                <span class="text-lg font-serif font-bold text-white">12 Sept 1910</span>
+                                <span class="text-xs text-gray-400 block">Munich (1,029 performers)</span>
+                            </div>
+                            <div class="bg-mahler-darkBg/60 p-4 rounded-xl border border-mahler-cardBorder">
+                                <span class="text-xs uppercase text-mahler-muted font-bold block">Structure</span>
+                                <span class="text-lg font-serif font-bold text-white">2 Parts</span>
+                                <span class="text-xs text-gray-400 block">Latin Hymn + Faust II</span>
+                            </div>
+                            <div class="bg-mahler-darkBg/60 p-4 rounded-xl border border-mahler-cardBorder">
+                                <span class="text-xs uppercase text-mahler-muted font-bold block">Solo Roles</span>
+                                <span class="text-lg font-serif font-bold text-white">8 Soloists</span>
+                                <span class="text-xs text-mahler-gold block">Part II Only</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured Visual Architectural Diagram (Graphic 1) -->
+                <div class="bg-mahler-cardBg rounded-2xl border border-mahler-gold/30 overflow-hidden shadow-2xl group cursor-pointer" @click="lightboxImage = { id: 'architecture', title: 'Overall Structural Architecture: Part I & Part II Bridge' }">
+                    <div class="p-6 border-b border-mahler-cardBorder flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-gradient-to-r from-mahler-darkBg to-mahler-cardBg">
+                        <div>
+                            <span class="text-xs font-semibold uppercase tracking-widest text-mahler-gold"><i class="fas fa-sitemap mr-1.5"></i>Visual Symphony Architecture</span>
+                            <h2 class="text-2xl font-serif font-bold text-white mt-0.5">Overall Structure & The "Accende" Bridge</h2>
+                        </div>
+                        <span class="px-3 py-1.5 rounded-lg bg-mahler-gold/15 border border-mahler-gold/30 text-mahler-gold text-xs font-semibold flex items-center gap-2 group-hover:bg-mahler-gold group-hover:text-mahler-darkBg transition-all">
+                            <i class="fas fa-expand"></i> Click to Enlarge Diagram
+                        </span>
+                    </div>
+                    <div class="relative bg-black/60 p-6 sm:p-8 overflow-x-auto">
+                        <!-- Vector Architectural Diagram -->
+                        <div class="min-w-[650px] space-y-6">
+                            <div class="grid grid-cols-11 gap-2 items-center text-center">
+                                <!-- Part 1 Block -->
+                                <div class="col-span-4 bg-gradient-to-br from-mahler-burgundy/80 to-red-950/90 border-2 border-mahler-gold/60 p-5 rounded-2xl shadow-xl relative group-hover:border-mahler-gold transition-all">
+                                    <div class="text-xs uppercase font-bold text-mahler-gold tracking-widest mb-1">PART I — SACRED & COLLECTIVE</div>
+                                    <div class="text-lg font-serif font-bold text-white">Veni, Creator Spiritus</div>
+                                    <div class="text-xs text-gray-300 mt-2 font-literary">9th-Century Latin Hymn</div>
+                                    <div class="mt-3 inline-block px-2.5 py-1 rounded bg-black/40 text-[11px] font-mono text-mahler-goldLight border border-mahler-gold/20">Sonata-Allegro Form • E-flat Major</div>
+                                </div>
+
+                                <!-- Bridge Connector Arrow Left -->
+                                <div class="col-span-1 flex items-center justify-center text-mahler-gold text-xl font-bold">
+                                    <i class="fas fa-long-arrow-alt-right text-2xl animate-pulse"></i>
+                                </div>
+
+                                <!-- The Accende Hinge -->
+                                <div class="col-span-1 bg-gradient-to-b from-amber-500/20 via-mahler-gold/30 to-amber-500/20 border-2 border-mahler-gold p-4 rounded-xl shadow-2xl relative text-center gold-border-glow">
+                                    <div class="text-[10px] font-bold text-mahler-gold uppercase tracking-wider">Pivotal Hinge</div>
+                                    <div class="text-sm font-serif font-extrabold text-white my-1">ACCENDE</div>
+                                    <div class="text-[10px] text-mahler-goldLight font-mono">m. 262</div>
+                                    <div class="text-[9px] text-gray-300 italic">Double Fugue</div>
+                                </div>
+
+                                <!-- Bridge Connector Arrow Right -->
+                                <div class="col-span-1 flex items-center justify-center text-mahler-gold text-xl font-bold">
+                                    <i class="fas fa-long-arrow-alt-right text-2xl animate-pulse"></i>
+                                </div>
+
+                                <!-- Part 2 Block -->
+                                <div class="col-span-4 bg-gradient-to-br from-blue-950/80 to-slate-900/90 border-2 border-blue-500/60 p-5 rounded-2xl shadow-xl relative group-hover:border-blue-400 transition-all">
+                                    <div class="text-xs uppercase font-bold text-blue-300 tracking-widest mb-1">PART II — HUMAN & INDIVIDUAL</div>
+                                    <div class="text-lg font-serif font-bold text-white">Goethe's Faust II Finale</div>
+                                    <div class="text-xs text-gray-300 mt-2 font-literary">Closing Scene: Bergschluchten</div>
+                                    <div class="mt-3 inline-block px-2.5 py-1 rounded bg-black/40 text-[11px] font-mono text-blue-200 border border-blue-500/20">Continuous Arc • E-flat Minor → Major</div>
+                                </div>
+                            </div>
+
+                            <!-- Structural Sub-Flow Legend -->
+                            <div class="grid grid-cols-3 gap-4 pt-4 border-t border-mahler-cardBorder/80 text-xs text-gray-300">
+                                <div class="flex items-center gap-3 bg-mahler-darkBg/80 p-3 rounded-xl border border-mahler-cardBorder">
+                                    <div class="w-8 h-8 rounded-lg bg-mahler-burgundy flex items-center justify-center text-mahler-gold font-bold"><i class="fas fa-church"></i></div>
+                                    <div>
+                                        <div class="font-bold text-white">Invocation of Divine Spirit</div>
+                                        <div class="text-[11px] text-gray-400">Massive double chorus & full orchestra</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 bg-mahler-darkBg/80 p-3 rounded-xl border border-mahler-gold/40">
+                                    <div class="w-8 h-8 rounded-lg bg-mahler-gold/20 text-mahler-gold flex items-center justify-center font-bold"><i class="fas fa-link"></i></div>
+                                    <div>
+                                        <div class="font-bold text-mahler-gold">The "Accende" Bridge</div>
+                                        <div class="text-[11px] text-gray-400">Binds sacred creation to Faustian redemption</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 bg-mahler-darkBg/80 p-3 rounded-xl border border-mahler-cardBorder">
+                                    <div class="w-8 h-8 rounded-lg bg-blue-900/60 text-blue-300 flex items-center justify-center font-bold"><i class="fas fa-feather-pointed"></i></div>
+                                    <div>
+                                        <div class="font-bold text-white">Transcendence & Eternal Feminine</div>
+                                        <div class="text-[11px] text-gray-400">8 Soloists, Chorus Mysticus & Offstage Brass</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 text-xs text-gray-300 border-t border-mahler-cardBorder/60 pt-4">
+                            <span class="text-mahler-gold font-bold">Key Architectural Concept:</span> Part I (Sacred Latin Hymn) and Part II (Goethe's Faust II) are structurally linked by the central <strong>"Accende Lumen Sensibus"</strong> bridge — moving from collective sacred invocation to individual human redemption.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Core Thesis & Redemption Section -->
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-mahler-cardBg rounded-2xl p-6 sm:p-8 border border-mahler-cardBorder space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-mahler-gold/10 border border-mahler-gold/30 flex items-center justify-center text-mahler-gold text-2xl">
+                            <i class="fas fa-infinity"></i>
+                        </div>
+                        <h2 class="text-2xl font-serif font-bold text-white">The Core Idea: Redemption & Agape</h2>
+                        <p class="text-gray-300 leading-relaxed font-literary text-lg">
+                            Separated by over a thousand years, a 9th-century Pentecostal Latin hymn (<span class="text-mahler-gold font-semibold">Veni, Creator Spiritus</span>) and the closing scene of Goethe's 19th-century German masterpiece (<span class="text-mahler-gold font-semibold">Faust Part II</span>) are bound together as one unified vision.
+                        </p>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Mahler framed their essential synthesis to his wife Alma: <em class="text-gray-200">"The two parts are mutually explanatory… the spirit of creation and redemption are one and the same."</em> The bridging concept is <strong>Agape</strong> — sacred, self-giving love — embodied in Part II as the <em>Ewig-Weibliche</em> ("Eternal Feminine").
+                        </p>
+                    </div>
+
+                    <div class="bg-mahler-cardBg rounded-2xl p-6 sm:p-8 border border-mahler-cardBorder space-y-4 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-mahler-gold/10 border border-mahler-gold/30 flex items-center justify-center text-mahler-gold text-2xl mb-4">
+                                <i class="fas fa-archway"></i>
+                            </div>
+                            <h2 class="text-2xl font-serif font-bold text-white">The "Accende" Structural Hinge</h2>
+                            <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                                At the Munich dress rehearsal in 1910, Mahler declared to Anton Webern:
+                            </p>
+                            <blockquote class="border-l-2 border-mahler-gold pl-4 py-1 italic text-mahler-goldLight font-literary text-base">
+                                "At the passage 'Accende lumen sensibus', the bridge extends over to the close of Faust. The passage is the pivotal point of the entire work."
+                            </blockquote>
+                        </div>
+                        <button @click="activeTab = 'motifs'" class="mt-4 w-full py-3 px-4 rounded-xl bg-mahler-gold/15 hover:bg-mahler-gold/25 border border-mahler-gold/40 text-mahler-gold font-semibold text-sm transition-all flex items-center justify-center gap-2">
+                            <span>Explore the Accende Motif & Double Fugue</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Part I vs Part II Comparison Matrix -->
+                <div class="bg-mahler-cardBg rounded-2xl border border-mahler-cardBorder p-6 sm:p-8">
+                    <h2 class="text-2xl font-serif font-bold text-white mb-6 text-center">Part I vs. Part II at a Glance</h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-mahler-cardBorder text-mahler-gold text-sm font-serif">
+                                    <th class="py-3 px-4">Feature</th>
+                                    <th class="py-3 px-4">Part I — Veni, Creator Spiritus</th>
+                                    <th class="py-3 px-4">Part II — Bergschluchten (Faust)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-mahler-cardBorder/50 text-sm text-gray-300">
+                                <tr>
+                                    <td class="py-3 px-4 font-semibold text-white">Text Source</td>
+                                    <td class="py-3 px-4">9th-century Latin Pentecostal hymn (Hrabanus Maurus)</td>
+                                    <td class="py-3 px-4">Closing scene of Goethe's <em>Faust II</em> (1832)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4 font-semibold text-white">Duration</td>
+                                    <td class="py-3 px-4">~25 minutes</td>
+                                    <td class="py-3 px-4">~55 minutes</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4 font-semibold text-white">Solo Roles</td>
+                                    <td class="py-3 px-4"><span class="text-red-400 font-bold uppercase text-xs px-2 py-0.5 rounded bg-red-950/60 border border-red-800/50">None</span> (Pure collective / divine)</td>
+                                    <td class="py-3 px-4"><span class="text-green-400 font-bold text-xs px-2 py-0.5 rounded bg-green-950/60 border border-green-800/50">8 Solo Roles</span> (Individual human redemption)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4 font-semibold text-white">Vocal Forces</td>
+                                    <td class="py-3 px-4">2 Mixed Choirs, Children's Choir, Orchestra</td>
+                                    <td class="py-3 px-4">8 Soloists, Penitent Women, Choirs, Boys, Orchestra</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4 font-semibold text-white">Symphonic Form</td>
+                                    <td class="py-3 px-4">Sonata-Allegro with grand Double Fugue & Coda</td>
+                                    <td class="py-3 px-4">Continuous Dramatic Shape (Andante–Scherzo–Finale)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4 font-semibold text-white">Tonal Axis</td>
+                                    <td class="py-3 px-4">E-flat Major (with E Major breakthrough)</td>
+                                    <td class="py-3 px-4">E-flat Minor (earthly) → E-flat Major (transcendence)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: MOVEMENT & STRUCTURE -->
+            <section v-if="activeTab === 'structure'" class="space-y-8">
+                <div class="text-center max-w-3xl mx-auto space-y-3">
+                    <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white">Symphonic Architecture</h2>
+                    <p class="text-gray-400">Explore the strict Classical sonata architecture of Part I and the expansive, operatic narrative arc of Part II.</p>
+                </div>
+
+                <!-- Toggle Buttons -->
+                <div class="flex justify-center gap-4">
+                    <button @click="structurePart = 1" 
+                            :class="[
+                                'px-6 py-3 rounded-xl font-serif font-bold transition-all border',
+                                structurePart === 1 ? 'bg-mahler-gold text-mahler-darkBg border-mahler-gold shadow-lg' : 'bg-mahler-cardBg text-gray-300 border-mahler-cardBorder hover:text-white'
+                            ]">
+                        Part I: Sonata-Allegro (Veni)
+                    </button>
+                    <button @click="structurePart = 2" 
+                            :class="[
+                                'px-6 py-3 rounded-xl font-serif font-bold transition-all border',
+                                structurePart === 2 ? 'bg-mahler-gold text-mahler-darkBg border-mahler-gold shadow-lg' : 'bg-mahler-cardBg text-gray-300 border-mahler-cardBorder hover:text-white'
+                            ]">
+                        Part II: Faust Dramatic Arc
+                    </button>
+                </div>
+
+                <!-- PART I STRUCTURE -->
+                <div v-if="structurePart === 1" class="space-y-6">
+                    <div class="grid md:grid-cols-4 gap-4">
+                        <div class="bg-mahler-cardBg p-5 rounded-2xl border border-mahler-cardBorder">
+                            <span class="text-xs text-mahler-gold font-bold uppercase block">Exposition</span>
+                            <span class="text-2xl font-serif font-bold text-white block mt-1">mm. 1–168</span>
+                            <p class="text-xs text-gray-400 mt-2">Theme I (Veni, E♭ major), Secondary group (D♭ / A♭), Closing section (Infirma, m. 141).</p>
+                        </div>
+                        <div class="bg-mahler-cardBg p-5 rounded-2xl border border-mahler-gold/50 bg-mahler-gold/5 shadow-md">
+                            <span class="text-xs text-mahler-gold font-bold uppercase block">Development (6 Sections)</span>
+                            <span class="text-2xl font-serif font-bold text-white block mt-1">mm. 169–412</span>
+                            <p class="text-xs text-gray-400 mt-2">Features the <strong class="text-mahler-gold">Accende breakthrough (m. 262)</strong> in E major & the central <strong class="text-mahler-gold">Double Fugue (m. 312)</strong>.</p>
+                        </div>
+                        <div class="bg-mahler-cardBg p-5 rounded-2xl border border-mahler-cardBorder">
+                            <span class="text-xs text-mahler-gold font-bold uppercase block">Recapitulation</span>
+                            <span class="text-2xl font-serif font-bold text-white block mt-1">mm. 413–489</span>
+                            <p class="text-xs text-gray-400 mt-2">Triumphant return of Veni theme on E♭ pedal point; contrapuntal combination of "Thought of Peace".</p>
+                        </div>
+                        <div class="bg-mahler-cardBg p-5 rounded-2xl border border-mahler-cardBorder">
+                            <span class="text-xs text-mahler-gold font-bold uppercase block">Coda (Gloria)</span>
+                            <span class="text-2xl font-serif font-bold text-white block mt-1">mm. 508–580</span>
+                            <p class="text-xs text-gray-400 mt-2">Doxology (Verse 8); offstage brass (4 trumpets, 3 trombones) blasting Accende theme in glory.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-mahler-cardBg rounded-2xl border border-mahler-cardBorder p-6 space-y-4">
+                        <h3 class="text-xl font-serif font-bold text-mahler-gold">Development Sub-Structure Breakdown</h3>
+                        <div class="space-y-3">
+                            <div class="p-3 bg-mahler-darkBg/80 rounded-xl border border-mahler-cardBorder flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+                                <div>
+                                    <span class="text-sm font-bold text-white">Section 1 (mm. 169–216):</span>
+                                    <span class="text-xs text-gray-300 ml-2">Allegro, etwas hastig — Orchestral interlude, low bell in A♭, distant Veni fragments.</span>
+                                </div>
+                                <span class="text-xs font-mono text-mahler-gold px-2 py-1 bg-mahler-gold/10 rounded">Instrumental</span>
+                            </div>
+                            <div class="p-3 bg-mahler-darkBg/80 rounded-xl border border-mahler-cardBorder flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+                                <div>
+                                    <span class="text-sm font-bold text-white">Section 2 (mm. 217–257):</span>
+                                    <span class="text-xs text-gray-300 ml-2">Infirma nostri corporis — C-sharp minor variant of Veni theme; slow & mysterious.</span>
+                                </div>
+                                <span class="text-xs font-mono text-gray-400 px-2 py-1 bg-mahler-cardBg rounded">Verse 3</span>
+                            </div>
+                            <div class="p-3 bg-mahler-gold/10 rounded-xl border border-mahler-gold/40 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+                                <div>
+                                    <span class="text-sm font-bold text-mahler-gold">Section 3 — Accende Breakthrough (mm. 262–289):</span>
+                                    <span class="text-xs text-gray-200 ml-2">Mit plötzlichem Aufschwung — Radiant E major fortissimo; boys' choir + full forces in unison!</span>
+                                </div>
+                                <span class="text-xs font-mono text-mahler-gold font-bold px-2 py-1 bg-mahler-gold/20 rounded">First Climax</span>
+                            </div>
+                            <div class="p-3 bg-mahler-darkBg/80 rounded-xl border border-mahler-cardBorder flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+                                <div>
+                                    <span class="text-sm font-bold text-white">Section 4 (mm. 290–311):</span>
+                                    <span class="text-xs text-gray-300 ml-2">Hostem repellas longius — Basso ostinato dramatic battle scene over evil forces.</span>
+                                </div>
+                                <span class="text-xs font-mono text-gray-400 px-2 py-1 bg-mahler-cardBg rounded">Verse 4</span>
+                            </div>
+                            <div class="p-3 bg-mahler-gold/10 rounded-xl border border-mahler-gold/40 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+                                <div>
+                                    <span class="text-sm font-bold text-mahler-gold">Section 5 — The Double Fugue (mm. 312–365):</span>
+                                    <span class="text-xs text-gray-200 ml-2">Grand double fugue on Veni & Creator/Accende themes; contrapuntal apex of Part I.</span>
+                                </div>
+                                <span class="text-xs font-mono text-mahler-gold font-bold px-2 py-1 bg-mahler-gold/20 rounded">The Hinge</span>
+                            </div>
+                            <div class="p-3 bg-mahler-darkBg/80 rounded-xl border border-mahler-cardBorder flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+                                <div>
+                                    <span class="text-sm font-bold text-white">Section 6 (mm. 366–412):</span>
+                                    <span class="text-xs text-gray-300 ml-2">Da-capo symmetry with Section 3 — Accende theme returns to close the development arc.</span>
+                                </div>
+                                <span class="text-xs font-mono text-gray-400 px-2 py-1 bg-mahler-cardBg rounded">Bridge</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PART II STRUCTURE -->
+                <div v-if="structurePart === 2" class="space-y-6">
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="bg-mahler-cardBg p-6 rounded-2xl border border-mahler-cardBorder space-y-3">
+                            <div class="text-xs text-mahler-gold font-bold uppercase tracking-wider">Act I: Instrumental & Hermits</div>
+                            <h3 class="text-xl font-serif font-bold text-white">Poco Adagio — Arioso</h3>
+                            <span class="text-xs text-mahler-muted block font-mono">mm. 1–442</span>
+                            <p class="text-xs text-gray-300 leading-relaxed">
+                                Evokes the wild, desolate mountain clefts (*Bergschluchten*). Muted strings, woodwinds, and low bell in E-flat minor. Features solos for <strong class="text-white">Pater Ecstaticus</strong> and <strong class="text-white">Pater Profundus</strong>.
+                            </p>
+                        </div>
+                        <div class="bg-mahler-cardBg p-6 rounded-2xl border border-mahler-cardBorder space-y-3">
+                            <div class="text-xs text-mahler-gold font-bold uppercase tracking-wider">Act II: Angels & Contemplation</div>
+                            <h3 class="text-xl font-serif font-bold text-white">Scherzo & Ascent</h3>
+                            <span class="text-xs text-mahler-muted block font-mono">mm. 443–779</span>
+                            <p class="text-xs text-gray-300 leading-relaxed">
+                                <strong class="text-white">Rose Chorus</strong> (*Jene Rosen*) of younger angels in E-flat major. Choir of more perfected angels (*Uns bleibt ein Erdenrest*). Entry of <strong class="text-white">Doctor Marianus</strong> praising the Queen of Heaven.
+                            </p>
+                        </div>
+                        <div class="bg-mahler-cardBg p-6 rounded-2xl border border-mahler-cardBorder space-y-3 border-mahler-gold/40 bg-mahler-gold/5">
+                            <div class="text-xs text-mahler-gold font-bold uppercase tracking-wider">Act III: Redemption & Finale</div>
+                            <h3 class="text-xl font-serif font-bold text-white">Adagissimo — Chorus Mysticus</h3>
+                            <span class="text-xs text-mahler-muted block font-mono">mm. 780–1572</span>
+                            <p class="text-xs text-gray-300 leading-relaxed">
+                                Floating entrance of <strong class="text-mahler-gold">Mater Gloriosa</strong> in E major. Trio of Penitent Women & Gretchen (<strong class="text-white">Una Poenitentium</strong>). Concludes with whisper-to-thunder <strong class="text-mahler-gold">Chorus Mysticus</strong>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: DUDAMEL TRACK MAP -->
+            <section v-if="activeTab === 'tracks'" class="space-y-8">
+                <div class="bg-mahler-cardBg rounded-2xl p-6 border border-mahler-cardBorder flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div>
+                        <span class="text-xs font-semibold uppercase tracking-widest text-mahler-gold">Recording Reference</span>
+                        <h2 class="text-2xl font-serif font-bold text-white mt-1">Gustavo Dudamel / DG (2021) Track Map</h2>
+                        <p class="text-sm text-gray-400 mt-1">32 Tracks | 75′30″ Total | Simón Bolívar Symphony Orchestra & LA Phil</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs text-gray-400">Filter Part:</span>
+                        <button @click="trackPartFilter = 'all'" :class="['px-3 py-1.5 rounded-lg text-xs font-bold', trackPartFilter === 'all' ? 'bg-mahler-gold text-mahler-darkBg' : 'bg-mahler-darkBg text-gray-300']">All (32)</button>
+                        <button @click="trackPartFilter = '1'" :class="['px-3 py-1.5 rounded-lg text-xs font-bold', trackPartFilter === '1' ? 'bg-mahler-gold text-mahler-darkBg' : 'bg-mahler-darkBg text-gray-300']">Part I (1–8)</button>
+                        <button @click="trackPartFilter = '2'" :class="['px-3 py-1.5 rounded-lg text-xs font-bold', trackPartFilter === '2' ? 'bg-mahler-gold text-mahler-darkBg' : 'bg-mahler-darkBg text-gray-300']">Part II (9–32)</button>
+                    </div>
+                </div>
+
+                <!-- Track List Grid -->
+                <div class="grid gap-3">
+                    <div v-for="track in filteredTracks" :key="track.id"
+                         @click="selectedTrack = track"
+                         :class="[
+                             'p-4 rounded-xl border transition-all cursor-pointer flex flex-col sm:flex-row justify-between sm:items-center gap-3',
+                             selectedTrack?.id === track.id ? 'bg-mahler-gold/15 border-mahler-gold shadow-lg' : 'bg-mahler-cardBg border-mahler-cardBorder hover:border-mahler-gold/40'
+                         ]">
+                        <div class="flex items-start sm:items-center gap-4">
+                            <div class="w-9 h-9 rounded-lg bg-mahler-darkBg flex items-center justify-center font-mono font-bold text-mahler-gold text-sm border border-mahler-cardBorder">
+                                {{ track.id }}
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs uppercase font-bold text-mahler-gold px-2 py-0.5 rounded bg-mahler-gold/10">Part {{ track.part }}</span>
+                                    <span class="text-xs text-gray-400 font-mono">mm. {{ track.measures }}</span>
+                                </div>
+                                <h3 class="text-base font-serif font-bold text-white mt-0.5">{{ track.title }}</h3>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 text-xs font-mono text-gray-400">
+                            <span>Accumulated: <strong class="text-mahler-gold">{{ track.time }}</strong></span>
+                            <i class="fas fa-chevron-right text-mahler-muted"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Track Detail Modal / Drawer -->
+                <div v-if="selectedTrack" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+                    <div class="bg-mahler-cardBg border border-mahler-gold/40 rounded-2xl max-w-2xl w-full p-6 space-y-4 relative shadow-2xl">
+                        <button @click="selectedTrack = null" class="absolute top-4 right-4 text-gray-400 hover:text-white p-2">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs uppercase font-bold text-mahler-gold px-2.5 py-1 rounded bg-mahler-gold/20">Track {{ selectedTrack.id }} • Part {{ selectedTrack.part }}</span>
+                            <span class="text-xs font-mono text-gray-400">End Time: {{ selectedTrack.time }}</span>
+                        </div>
+                        <h2 class="text-2xl font-serif font-bold text-white">{{ selectedTrack.title }}</h2>
+                        <div class="p-3 bg-mahler-darkBg rounded-xl border border-mahler-cardBorder text-xs text-gray-300 font-mono">
+                            Measure Range: mm. {{ selectedTrack.measures }}
+                        </div>
+                        <div class="space-y-2">
+                            <h4 class="text-sm font-serif font-bold text-mahler-gold uppercase tracking-wider">Analysis & Context</h4>
+                            <p class="text-sm text-gray-300 leading-relaxed font-literary">{{ selectedTrack.analysis }}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: EIGHT SOLO ROLES -->
+            <section v-if="activeTab === 'roles'" class="space-y-8">
+                <div class="text-center max-w-3xl mx-auto space-y-3">
+                    <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white">The Eight Solo Roles</h2>
+                    <p class="text-gray-400">All eight solo roles belong exclusively to Part II. They map an ascending spiritual hierarchy from earthly hermitages to divine grace.</p>
+                </div>
+
+                <!-- Featured Graphic 2: Eight Solo Roles Spiritual Hierarchy -->
+                <div class="bg-mahler-cardBg rounded-2xl border border-mahler-gold/30 overflow-hidden shadow-2xl group cursor-pointer" @click="lightboxImage = { id: 'hierarchy', title: 'Part II: The Eight Solo Roles Spiritual Hierarchy' }">
+                    <div class="p-6 border-b border-mahler-cardBorder flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-gradient-to-r from-mahler-darkBg to-mahler-cardBg">
+                        <div>
+                            <span class="text-xs font-semibold uppercase tracking-widest text-mahler-gold"><i class="fas fa-users-viewfinder mr-1.5"></i>Infographic Hierarchy Map</span>
+                            <h3 class="text-2xl font-serif font-bold text-white mt-0.5">Spiritual Contribution & Ascending Realms</h3>
+                        </div>
+                        <span class="px-3 py-1.5 rounded-lg bg-mahler-gold/15 border border-mahler-gold/30 text-mahler-gold text-xs font-semibold flex items-center gap-2 group-hover:bg-mahler-gold group-hover:text-mahler-darkBg transition-all">
+                            <i class="fas fa-expand"></i> Click to Enlarge Diagram
+                        </span>
+                    </div>
+                    <div class="relative bg-black/60 p-6 sm:p-8 overflow-x-auto">
+                        <div class="min-w-[650px] space-y-4">
+                            <!-- Tier 3: Heavenly Summit -->
+                            <div class="bg-gradient-to-r from-mahler-gold/20 via-amber-500/20 to-mahler-gold/20 border-2 border-mahler-gold p-5 rounded-2xl text-center space-y-2 gold-border-glow">
+                                <div class="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-mahler-gold text-mahler-darkBg text-xs font-bold uppercase tracking-wider">
+                                    <i class="fas fa-crown"></i> Level 3: Heavenly Summit (Divine Grace)
+                                </div>
+                                <div class="grid grid-cols-3 gap-3 pt-2">
+                                    <div class="bg-mahler-darkBg/90 p-3 rounded-xl border border-mahler-gold/50">
+                                        <div class="text-xs font-bold text-mahler-gold">Mater Gloriosa</div>
+                                        <div class="text-[11px] text-gray-300">Voiceless / 2 Lines (Soprano)</div>
+                                        <div class="text-[10px] text-gray-400 mt-1">E Major Grace • Queen of Heaven</div>
+                                    </div>
+                                    <div class="bg-mahler-darkBg/90 p-3 rounded-xl border border-mahler-gold/50">
+                                        <div class="text-xs font-bold text-mahler-gold">Una Poenitentium</div>
+                                        <div class="text-[11px] text-gray-300">Gretchen (Soprano II)</div>
+                                        <div class="text-[10px] text-gray-400 mt-1">Redeemed Soul welcoming Faust</div>
+                                    </div>
+                                    <div class="bg-mahler-darkBg/90 p-3 rounded-xl border border-mahler-gold/50">
+                                        <div class="text-xs font-bold text-mahler-gold">Three Biblical Penitents</div>
+                                        <div class="text-[11px] text-gray-300">Magna Peccatrix • Mulier Samaritana • Maria Aegyptiaca</div>
+                                        <div class="text-[10px] text-gray-400 mt-1">Soprano I, Alto I, Alto II</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Ascension Arrow -->
+                            <div class="flex justify-center my-1 text-mahler-gold">
+                                <i class="fas fa-chevron-up text-xl animate-bounce"></i>
+                            </div>
+
+                            <!-- Tier 2: Spiritual Middle Realm -->
+                            <div class="bg-gradient-to-r from-indigo-950/60 via-purple-950/60 to-indigo-950/60 border border-indigo-500/40 p-4 rounded-2xl text-center space-y-2">
+                                <div class="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 text-xs font-bold uppercase tracking-wider">
+                                    <i class="fas fa-eye"></i> Level 2: Contemplative Middle Realm
+                                </div>
+                                <div class="grid grid-cols-2 gap-3 pt-1">
+                                    <div class="bg-mahler-darkBg/80 p-3 rounded-xl border border-indigo-500/30">
+                                        <div class="text-xs font-bold text-indigo-200">Doctor Marianus</div>
+                                        <div class="text-[11px] text-gray-300">Tenor</div>
+                                        <div class="text-[10px] text-gray-400">Directs spiritual gaze upward ("Blicket auf!")</div>
+                                    </div>
+                                    <div class="bg-mahler-darkBg/80 p-3 rounded-xl border border-indigo-500/30">
+                                        <div class="text-xs font-bold text-indigo-200">Angels & Blessed Boys</div>
+                                        <div class="text-[11px] text-gray-300">Choir of Angels / Boys' Choir</div>
+                                        <div class="text-[10px] text-gray-400">Rose Chorus & reborn souls ascending</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Ascension Arrow -->
+                            <div class="flex justify-center my-1 text-mahler-gold">
+                                <i class="fas fa-chevron-up text-xl"></i>
+                            </div>
+
+                            <!-- Tier 1: Earthly Depths -->
+                            <div class="bg-gradient-to-r from-amber-950/40 via-stone-900/60 to-amber-950/40 border border-amber-800/40 p-4 rounded-2xl text-center space-y-2">
+                                <div class="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-amber-900/40 text-amber-300 border border-amber-700/40 text-xs font-bold uppercase tracking-wider">
+                                    <i class="fas fa-mountain"></i> Level 1: Earthly Depths & Mountain Gorges
+                                </div>
+                                <div class="grid grid-cols-2 gap-3 pt-1">
+                                    <div class="bg-mahler-darkBg/80 p-3 rounded-xl border border-amber-800/30">
+                                        <div class="text-xs font-bold text-amber-200">Pater Ecstaticus</div>
+                                        <div class="text-[11px] text-gray-300">Tenor</div>
+                                        <div class="text-[10px] text-gray-400">Hovering ecstasy & longing for divine union</div>
+                                    </div>
+                                    <div class="bg-mahler-darkBg/80 p-3 rounded-xl border border-amber-800/30">
+                                        <div class="text-xs font-bold text-amber-200">Pater Profundus</div>
+                                        <div class="text-[11px] text-gray-300">Bass</div>
+                                        <div class="text-[10px] text-gray-400">Deep forces of nature & rock abysses</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 text-xs text-gray-300 border-t border-mahler-cardBorder/60 pt-4">
+                            <span class="text-mahler-gold font-bold">Ascension Arc:</span> From Pater Ecstaticus & Pater Profundus in the <em>Earthly Depths</em>, through Doctor Marianus in the <em>Spiritual Middle Realm</em>, to the Three Penitent Women, Gretchen (Una Poenitentium), and Mater Gloriosa at the <em>Heavenly Summit</em>.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Roles Grid -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div v-for="role in roles" :key="role.name"
+                         @click="selectedRole = role"
+                         :class="[
+                             'bg-mahler-cardBg rounded-2xl p-6 border transition-all cursor-pointer flex flex-col justify-between space-y-4 hover:shadow-xl',
+                             selectedRole?.name === role.name ? 'border-mahler-gold bg-mahler-gold/10' : 'border-mahler-cardBorder hover:border-mahler-gold/40'
+                         ]">
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs uppercase font-bold text-mahler-gold px-2 py-0.5 rounded bg-mahler-gold/10">{{ role.voice }}</span>
+                                <span class="text-xs text-mahler-muted font-serif">Level {{ role.level }}</span>
+                            </div>
+                            <h3 class="text-xl font-serif font-bold text-white">{{ role.name }}</h3>
+                            <span class="text-xs text-gray-400 block italic">{{ role.identity }}</span>
+                        </div>
+                        <p class="text-xs text-gray-300 line-clamp-3 leading-relaxed">{{ role.description }}</p>
+                        <div class="pt-2 border-t border-mahler-cardBorder flex items-center justify-between text-xs text-mahler-gold font-semibold">
+                            <span>View Details</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Role Details Panel -->
+                <div v-if="selectedRole" class="bg-mahler-cardBg rounded-2xl border border-mahler-gold/50 p-6 sm:p-8 space-y-4 shadow-2xl">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-xs uppercase font-bold text-mahler-gold tracking-widest">Spiritual Rank Level {{ selectedRole.level }}</span>
+                            <h3 class="text-3xl font-serif font-bold text-white mt-1">{{ selectedRole.name }}</h3>
+                            <p class="text-sm text-mahler-goldLight font-serif">{{ selectedRole.voice }} • {{ selectedRole.identity }}</p>
+                        </div>
+                        <button @click="selectedRole = null" class="text-gray-400 hover:text-white p-2">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6 pt-4 border-t border-mahler-cardBorder">
+                        <div class="space-y-3">
+                            <h4 class="text-xs uppercase text-mahler-muted font-bold tracking-wider">Dramatic Role & Symbolism</h4>
+                            <p class="text-sm text-gray-300 leading-relaxed font-literary">{{ selectedRole.description }}</p>
+                        </div>
+                        <div class="space-y-3 bg-mahler-darkBg p-4 rounded-xl border border-mahler-cardBorder">
+                            <h4 class="text-xs uppercase text-mahler-gold font-bold tracking-wider">Key Text / Entrance</h4>
+                            <blockquote class="text-sm font-literary italic text-gray-200 border-l-2 border-mahler-gold pl-3 py-1">
+                                "{{ selectedRole.keyQuote }}"
+                            </blockquote>
+                            <span class="text-xs text-gray-400 block">Passage: {{ selectedRole.passage }}</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 5: MOTIFS & CONTRAPUNTAL EXPLORER -->
+            <section v-if="activeTab === 'motifs'" class="space-y-8">
+                <div class="text-center max-w-3xl mx-auto space-y-3">
+                    <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white">Leitmotifs & Counterpoint</h2>
+                    <p class="text-gray-400">Discover how Mahler unifies 85 minutes of music through recurring thematic transformations and contrapuntal mastery.</p>
+                </div>
+
+                <!-- Interactive Audio Synth Motif Player -->
+                <div class="bg-mahler-cardBg rounded-2xl border border-mahler-gold/40 p-6 sm:p-8 space-y-6 shadow-xl">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div>
+                            <span class="text-xs uppercase font-bold text-mahler-gold tracking-widest">Interactive Audio Demo</span>
+                            <h3 class="text-2xl font-serif font-bold text-white">The "Veni" Spine Motif</h3>
+                            <p class="text-sm text-gray-400">Interval: Confident falling perfect fourth in E-flat major (E♭5 → B♭4)</p>
+                        </div>
+                        <button @click="playVeniMotif" class="px-5 py-3 rounded-xl bg-mahler-gold hover:bg-mahler-goldLight text-mahler-darkBg font-bold text-sm transition-all flex items-center gap-2 shadow-lg">
+                            <i class="fas fa-volume-high"></i>
+                            <span>Play "Veni" Audio Motif</span>
+                        </button>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-4 text-xs">
+                        <div class="p-4 bg-mahler-darkBg rounded-xl border border-mahler-cardBorder space-y-2">
+                            <span class="text-mahler-gold font-bold uppercase block">1. Invocation (Part I opening)</span>
+                            <p class="text-gray-300">Loud upper voices + brass. Urgent, dramatic plea for inspiration.</p>
+                        </div>
+                        <div class="p-4 bg-mahler-darkBg rounded-xl border border-mahler-cardBorder space-y-2">
+                            <span class="text-mahler-gold font-bold uppercase block">2. Prelude (Part II opening)</span>
+                            <p class="text-gray-300">Quiet woodwinds, muted strings. Searching in darkness for the invoked spirit.</p>
+                        </div>
+                        <div class="p-4 bg-mahler-darkBg rounded-xl border border-mahler-cardBorder space-y-2">
+                            <span class="text-mahler-gold font-bold uppercase block">3. Closing (Chorus Mysticus)</span>
+                            <p class="text-gray-300">Offstage & main brass in full imitation. The symphony closes as it began.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- The Borrowings Map -->
+                <div class="bg-mahler-cardBg rounded-2xl border border-mahler-cardBorder p-6 sm:p-8 space-y-6">
+                    <h3 class="text-2xl font-serif font-bold text-white">Complete Map of Part I Borrowings in Part II</h3>
+                    <p class="text-sm text-gray-400">Mahler explicitly quotes and re-contextualizes musical material from Part I inside Part II to build semantic commentary between the Latin and German texts.</p>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs sm:text-sm">
+                            <thead>
+                                <tr class="border-b border-mahler-cardBorder text-mahler-gold font-serif">
+                                    <th class="py-3 px-3">Part II mm.</th>
+                                    <th class="py-3 px-3">Part I Source</th>
+                                    <th class="py-3 px-3">German Text (Part II)</th>
+                                    <th class="py-3 px-3">Latin Origin (Part I)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-mahler-cardBorder/40 text-gray-300">
+                                <tr class="hover:bg-mahler-darkBg/60">
+                                    <td class="py-3 px-3 font-mono font-bold text-white">385–410</td>
+                                    <td class="py-3 px-3 font-mono text-mahler-gold">mm. 262–281</td>
+                                    <td class="py-3 px-3"><em>Gerettet ist das edle Glied</em></td>
+                                    <td class="py-3 px-3"><em>Accende lumen / Infunde amorem</em></td>
+                                </tr>
+                                <tr class="hover:bg-mahler-darkBg/60">
+                                    <td class="py-3 px-3 font-mono font-bold text-white">540–580</td>
+                                    <td class="py-3 px-3 font-mono text-mahler-gold">mm. 135–168</td>
+                                    <td class="py-3 px-3"><em>Uns bleibt ein Erdenrest</em></td>
+                                    <td class="py-3 px-3"><em>Infirma nostri corporis</em></td>
+                                </tr>
+                                <tr class="hover:bg-mahler-darkBg/60">
+                                    <td class="py-3 px-3 font-mono font-bold text-white">613–638</td>
+                                    <td class="py-3 px-3 font-mono text-mahler-gold">mm. 422–425</td>
+                                    <td class="py-3 px-3"><em>Freudig empfangen wir</em> (Blessed Boys)</td>
+                                    <td class="py-3 px-3">Instrumental Trumpet/Horn motif</td>
+                                </tr>
+                                <tr class="hover:bg-mahler-darkBg/60">
+                                    <td class="py-3 px-3 font-mono font-bold text-white">1142–1186</td>
+                                    <td class="py-3 px-3 font-mono text-mahler-gold">mm. 46–61, 108–122</td>
+                                    <td class="py-3 px-3"><em>Er ahnet kaum das frische Leben</em> (Gretchen)</td>
+                                    <td class="py-3 px-3"><em>Imple superna gratia</em></td>
+                                </tr>
+                                <tr class="hover:bg-mahler-darkBg/60">
+                                    <td class="py-3 px-3 font-mono font-bold text-white">1528–1572</td>
+                                    <td class="py-3 px-3 font-mono text-mahler-gold">mm. 1–30</td>
+                                    <td class="py-3 px-3">Chorus Mysticus Postlude</td>
+                                    <td class="py-3 px-3">Opening <em>Veni, creator spiritus</em></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 6: PARALLEL BILINGUAL TEXT READER -->
+            <section v-if="activeTab === 'text'" class="space-y-6">
+                <div class="bg-mahler-cardBg rounded-2xl p-6 border border-mahler-cardBorder space-y-5">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <h2 class="text-2xl font-serif font-bold text-white">Complete Parallel Text</h2>
+                            <p class="text-sm text-gray-400">Part I: the <em>Veni, creator spiritus</em> hymn in Mahler's performance order. Part II: the closing scene of Goethe's <em>Faust</em>, complete.</p>
+                        </div>
+                        <div class="w-full md:w-72 flex-shrink-0">
+                            <input v-model="textSearchQuery" type="text" placeholder="Search text, roles, or measures..."
+                                   class="w-full px-4 py-2 rounded-xl bg-mahler-darkBg border border-mahler-cardBorder text-sm text-white focus:outline-none focus:border-mahler-gold">
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 pt-1 border-t border-mahler-cardBorder/60">
+                        <button @click="textPartFilter = 'all'"
+                                :class="textPartFilter === 'all' ? 'bg-mahler-gold text-mahler-darkBg' : 'bg-mahler-darkBg text-gray-300 hover:text-white'"
+                                class="mt-4 px-4 py-1.5 rounded-lg text-xs font-bold transition-colors border border-mahler-cardBorder">
+                            Both Parts ({{ part1Count + part2Count }})
+                        </button>
+                        <button @click="textPartFilter = 'I'"
+                                :class="textPartFilter === 'I' ? 'bg-mahler-gold text-mahler-darkBg' : 'bg-mahler-darkBg text-gray-300 hover:text-white'"
+                                class="mt-4 px-4 py-1.5 rounded-lg text-xs font-bold transition-colors border border-mahler-cardBorder">
+                            Part I &mdash; Veni, Creator Spiritus ({{ part1Count }})
+                        </button>
+                        <button @click="textPartFilter = 'II'"
+                                :class="textPartFilter === 'II' ? 'bg-mahler-gold text-mahler-darkBg' : 'bg-mahler-darkBg text-gray-300 hover:text-white'"
+                                class="mt-4 px-4 py-1.5 rounded-lg text-xs font-bold transition-colors border border-mahler-cardBorder">
+                            Part II &mdash; Bergschluchten ({{ part2Count }})
+                        </button>
+                        <span class="mt-4 text-xs text-gray-500 ml-auto">{{ filteredVerses.length }} section{{ filteredVerses.length === 1 ? '' : 's' }} shown</span>
+                    </div>
+                </div>
+
+                <!-- Verses Stream -->
+                <div class="space-y-6">
+                    <div v-for="(section, idx) in filteredVerses" :key="section.part + '-' + section.idx" class="bg-mahler-cardBg rounded-2xl border border-mahler-cardBorder overflow-hidden scroll-mt-24">
+                        <div class="bg-mahler-darkBg/90 px-6 py-3 border-b border-mahler-cardBorder flex flex-wrap justify-between items-center gap-x-4 gap-y-1">
+                            <span class="font-serif font-bold text-mahler-gold text-base flex items-center gap-2.5">
+                                <span class="text-[10px] font-sans font-bold px-2 py-0.5 rounded bg-mahler-gold/15 text-mahler-gold/90 border border-mahler-gold/30 tracking-wider">
+                                    {{ section.part === 'I' ? 'PART I' : 'PART II' }}
+                                </span>
+                                {{ section.speaker }}
+                            </span>
+                            <span v-if="section.stageDir" class="text-xs text-gray-400 italic">{{ section.stageDir }}</span>
+                        </div>
+                        <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-mahler-cardBorder text-sm p-6 gap-6">
+                            <div>
+                                <div class="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2">{{ section.part === 'I' ? 'Latin' : 'German' }}</div>
+                                <div class="font-literary text-gray-200 whitespace-pre-line leading-relaxed">{{ section.german }}</div>
+                            </div>
+                            <div class="md:pl-6">
+                                <div class="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2">English</div>
+                                <div class="font-literary text-gray-400 whitespace-pre-line leading-relaxed italic">{{ section.english }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div v-if="filteredVerses.length === 0" class="bg-mahler-cardBg rounded-2xl border border-mahler-cardBorder p-10 text-center">
+                        <p class="text-gray-400">No sections match &ldquo;{{ textSearchQuery }}&rdquo;.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 7: HISTORICAL CONTEXT & FREUD -->
+            <section v-if="activeTab === 'history'" class="space-y-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- 1906 Composition -->
+                    <div class="bg-mahler-cardBg rounded-2xl p-6 sm:p-8 border border-mahler-cardBorder space-y-4">
+                        <div class="w-10 h-10 rounded-lg bg-mahler-gold/10 flex items-center justify-center text-mahler-gold text-xl font-bold">
+                            1906
+                        </div>
+                        <h3 class="text-2xl font-serif font-bold text-white">The Maiernigg Creative Burst</h3>
+                        <p class="text-sm text-gray-300 leading-relaxed font-literary">
+                            In mid-June 1906, suffering from initial creative paralysis in his lakeside hut, Mahler was struck as if by lightning. He sketched the vast majority of Symphony No. 8 in roughly <strong>ten weeks</strong>. When the complete Latin text arrived by telegraph from Vienna, he discovered his musical draft already anticipated every missing syllable.
+                        </p>
+                    </div>
+
+                    <!-- Freud & Alma Connection -->
+                    <div class="bg-mahler-cardBg rounded-2xl p-6 sm:p-8 border border-mahler-cardBorder space-y-4">
+                        <div class="w-10 h-10 rounded-lg bg-mahler-gold/10 flex items-center justify-center text-mahler-gold text-xl font-bold">
+                            1910
+                        </div>
+                        <h3 class="text-2xl font-serif font-bold text-white">The Freud Consultation & Alma</h3>
+                        <p class="text-sm text-gray-300 leading-relaxed font-literary">
+                            In August 1910, right before the Munich premiere, Mahler walked for four hours in Leiden with <strong>Sigmund Freud</strong>. Freud illuminated Mahler's psychological projection of the <em>Ewig-Weibliche</em> onto his wife Alma. Mahler dedicated the symphony to Alma ("my harbor"), viewing her as the living reflection of the Mater Gloriosa.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Instrument Symbolism Grid -->
+                <div class="bg-mahler-cardBg rounded-2xl border border-mahler-cardBorder p-6 sm:p-8 space-y-4">
+                    <h3 class="text-2xl font-serif font-bold text-white">Symbolic Instrumentation System</h3>
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+                        <div class="p-4 bg-mahler-darkBg rounded-xl border border-mahler-cardBorder space-y-2">
+                            <span class="text-mahler-gold font-bold text-sm block"><i class="fas fa-guitar mr-2"></i>Mandolin</span>
+                            <p class="text-xs text-gray-300">Used strictly during Gretchen's song (*Una Poenitentium*); evokes intimate earthly tenderness & lost youth.</p>
+                        </div>
+                        <div class="p-4 bg-mahler-darkBg rounded-xl border border-mahler-cardBorder space-y-2">
+                            <span class="text-mahler-gold font-bold text-sm block"><i class="fas fa-bell mr-2"></i>Glockenspiel</span>
+                            <p class="text-xs text-gray-300">Assigned to the Choir of Blessed Boys (*selige Knaben*); symbolizes the soul beginning anew in a pupal state.</p>
+                        </div>
+                        <div class="p-4 bg-mahler-darkBg rounded-xl border border-mahler-cardBorder space-y-2">
+                            <span class="text-mahler-gold font-bold text-sm block"><i class="fas fa-church mr-2"></i>Harps & Harmonium</span>
+                            <p class="text-xs text-gray-300">Accompanies Mater Gloriosa's hovering entry; creates an ethereal, floating *Religioso* atmosphere.</p>
+                        </div>
+                        <div class="p-4 bg-mahler-darkBg rounded-xl border border-mahler-cardBorder space-y-2">
+                            <span class="text-mahler-gold font-bold text-sm block"><i class="fas fa-drum mr-2"></i>Low Bell & Tam-Tam</span>
+                            <p class="text-xs text-gray-300">Low bell in A/A♭ serves as Mahler's aural symbol of death; Tam-tam dies away at Doctor Marianus's close.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 8: KNOWLEDGE QUIZ -->
+            <section v-if="activeTab === 'quiz'" class="max-w-2xl mx-auto space-y-8">
+                <div class="text-center space-y-3">
+                    <h2 class="text-3xl font-serif font-bold text-white">Symphony No. 8 Knowledge Test</h2>
+                    <p class="text-gray-400">Test your understanding of the architecture, symbolism, and history.</p>
+                </div>
+
+                <div v-if="quizIndex < quizQuestions.length" class="bg-mahler-cardBg rounded-2xl border border-mahler-cardBorder p-6 sm:p-8 space-y-6">
+                    <div class="flex justify-between items-center text-xs text-mahler-gold font-bold">
+                        <span>Question {{ quizIndex + 1 }} of {{ quizQuestions.length }}</span>
+                        <span>Score: {{ quizScore }}</span>
+                    </div>
+
+                    <h3 class="text-xl font-serif font-bold text-white">{{ currentQuestion.question }}</h3>
+
+                    <div class="space-y-3">
+                        <button v-for="(opt, idx) in currentQuestion.options" :key="idx"
+                                @click="answerQuiz(idx)"
+                                :disabled="quizAnswered"
+                                :class="[
+                                    'w-full text-left p-4 rounded-xl border text-sm font-medium transition-all flex items-center justify-between',
+                                    quizAnswered && idx === currentQuestion.correct ? 'bg-green-950/60 border-green-500 text-green-200' : '',
+                                    quizAnswered && quizSelectedOpt === idx && idx !== currentQuestion.correct ? 'bg-red-950/60 border-red-500 text-red-200' : '',
+                                    !quizAnswered ? 'bg-mahler-darkBg border-mahler-cardBorder text-gray-300 hover:border-mahler-gold/50' : ''
+                                ]">
+                            <span>{{ opt }}</span>
+                            <i v-if="quizAnswered && idx === currentQuestion.correct" class="fas fa-check-circle text-green-400 text-lg"></i>
+                            <i v-if="quizAnswered && quizSelectedOpt === idx && idx !== currentQuestion.correct" class="fas fa-times-circle text-red-400 text-lg"></i>
+                        </button>
+                    </div>
+
+                    <div v-if="quizAnswered" class="p-4 rounded-xl bg-mahler-darkBg border border-mahler-cardBorder text-xs text-gray-300 leading-relaxed">
+                        <strong class="text-mahler-gold block mb-1">Explanation:</strong>
+                        {{ currentQuestion.explanation }}
+                    </div>
+
+                    <button v-if="quizAnswered" @click="nextQuestion" class="w-full py-3 rounded-xl bg-mahler-gold text-mahler-darkBg font-bold text-sm hover:bg-mahler-goldLight transition-all">
+                        {{ quizIndex + 1 === quizQuestions.length ? 'View Final Results' : 'Next Question' }}
+                    </button>
+                </div>
+
+                <!-- Quiz Results -->
+                <div v-else class="bg-mahler-cardBg rounded-2xl border border-mahler-gold/40 p-8 text-center space-y-6">
+                    <div class="w-16 h-16 rounded-full bg-mahler-gold/20 border border-mahler-gold flex items-center justify-center text-mahler-gold text-3xl mx-auto">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3 class="text-3xl font-serif font-bold text-white">Quiz Completed!</h3>
+                    <p class="text-lg text-gray-300">You scored <strong class="text-mahler-gold font-bold">{{ quizScore }}</strong> out of {{ quizQuestions.length }}.</p>
+                    <button @click="resetQuiz" class="px-6 py-3 rounded-xl bg-mahler-gold text-mahler-darkBg font-bold text-sm hover:bg-mahler-goldLight transition-all">
+                        Retake Quiz
+                    </button>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Lightbox Modal for Graphics -->
+        <div v-if="lightboxImage" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4" @click.self="lightboxImage = null">
+            <div class="max-w-6xl w-full bg-mahler-cardBg border border-mahler-gold/40 rounded-2xl overflow-hidden shadow-2xl relative flex flex-col max-h-[92vh]">
+                <div class="p-4 bg-mahler-darkBg border-b border-mahler-cardBorder flex justify-between items-center">
+                    <h3 class="font-serif font-bold text-mahler-gold text-lg flex items-center gap-2">
+                        <i class="fas fa-sitemap"></i> {{ lightboxImage.title }}
+                    </h3>
+                    <button @click="lightboxImage = null" class="text-gray-400 hover:text-white p-2 text-xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="p-6 overflow-auto flex-grow flex items-center justify-center bg-black/70">
+                    <!-- Expanded Architecture Diagram -->
+                    <div v-if="lightboxImage.id === 'architecture'" class="w-full max-w-4xl space-y-6">
+                        <div class="grid grid-cols-11 gap-3 items-center text-center">
+                            <div class="col-span-4 bg-gradient-to-br from-mahler-burgundy to-red-950 border-2 border-mahler-gold p-6 rounded-2xl shadow-xl">
+                                <div class="text-xs uppercase font-bold text-mahler-gold tracking-widest mb-1">PART I — SACRED & COLLECTIVE</div>
+                                <div class="text-2xl font-serif font-bold text-white">Veni, Creator Spiritus</div>
+                                <div class="text-sm text-gray-300 mt-2 font-literary">9th-Century Latin Hymn</div>
+                                <div class="mt-4 inline-block px-3 py-1 rounded bg-black/40 text-xs font-mono text-mahler-goldLight border border-mahler-gold/30">Sonata-Allegro Form • E-flat Major</div>
+                            </div>
+
+                            <div class="col-span-1 flex items-center justify-center text-mahler-gold text-2xl font-bold">
+                                <i class="fas fa-long-arrow-alt-right text-3xl animate-pulse"></i>
+                            </div>
+
+                            <div class="col-span-1 bg-gradient-to-b from-amber-500/20 via-mahler-gold/40 to-amber-500/20 border-2 border-mahler-gold p-5 rounded-2xl shadow-2xl text-center gold-border-glow">
+                                <div class="text-xs font-bold text-mahler-gold uppercase tracking-wider">The Hinge</div>
+                                <div class="text-lg font-serif font-extrabold text-white my-1">ACCENDE</div>
+                                <div class="text-xs text-mahler-goldLight font-mono">m. 262</div>
+                                <div class="text-xs text-gray-300 italic">Double Fugue</div>
+                            </div>
+
+                            <div class="col-span-1 flex items-center justify-center text-mahler-gold text-2xl font-bold">
+                                <i class="fas fa-long-arrow-alt-right text-3xl animate-pulse"></i>
+                            </div>
+
+                            <div class="col-span-4 bg-gradient-to-br from-blue-950 to-slate-900 border-2 border-blue-400 p-6 rounded-2xl shadow-xl">
+                                <div class="text-xs uppercase font-bold text-blue-300 tracking-widest mb-1">PART II — HUMAN & INDIVIDUAL</div>
+                                <div class="text-2xl font-serif font-bold text-white">Goethe's Faust II Finale</div>
+                                <div class="text-sm text-gray-300 mt-2 font-literary">Closing Scene: Bergschluchten</div>
+                                <div class="mt-4 inline-block px-3 py-1 rounded bg-black/40 text-xs font-mono text-blue-200 border border-blue-400/30">Continuous Arc • E-flat Minor → Major</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Expanded Hierarchy Diagram -->
+                    <div v-else-if="lightboxImage.id === 'hierarchy'" class="w-full max-w-4xl space-y-6">
+                        <div class="bg-gradient-to-r from-mahler-gold/20 via-amber-500/30 to-mahler-gold/20 border-2 border-mahler-gold p-6 rounded-2xl text-center space-y-3 gold-border-glow">
+                            <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-mahler-gold text-mahler-darkBg text-sm font-bold uppercase tracking-wider">
+                                <i class="fas fa-crown"></i> Level 3: Heavenly Summit (Divine Grace)
+                            </div>
+                            <div class="grid grid-cols-3 gap-4 pt-2">
+                                <div class="bg-mahler-darkBg p-4 rounded-xl border border-mahler-gold/50">
+                                    <div class="text-sm font-bold text-mahler-gold">Mater Gloriosa</div>
+                                    <div class="text-xs text-gray-300 mt-1">Voiceless / 2 Lines (Soprano)</div>
+                                </div>
+                                <div class="bg-mahler-darkBg p-4 rounded-xl border border-mahler-gold/50">
+                                    <div class="text-sm font-bold text-mahler-gold">Una Poenitentium</div>
+                                    <div class="text-xs text-gray-300 mt-1">Gretchen (Soprano II)</div>
+                                </div>
+                                <div class="bg-mahler-darkBg p-4 rounded-xl border border-mahler-gold/50">
+                                    <div class="text-sm font-bold text-mahler-gold">Three Biblical Penitents</div>
+                                    <div class="text-xs text-gray-300 mt-1">Magna Peccatrix, Mulier Samaritana, Maria Aegyptiaca</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-indigo-950/80 via-purple-950/80 to-indigo-950/80 border border-indigo-500/50 p-5 rounded-2xl text-center space-y-3">
+                            <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 text-sm font-bold uppercase tracking-wider">
+                                <i class="fas fa-eye"></i> Level 2: Contemplative Middle Realm
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 pt-1">
+                                <div class="bg-mahler-darkBg p-4 rounded-xl border border-indigo-500/30">
+                                    <div class="text-sm font-bold text-indigo-200">Doctor Marianus</div>
+                                    <div class="text-xs text-gray-300">Tenor</div>
+                                </div>
+                                <div class="bg-mahler-darkBg p-4 rounded-xl border border-indigo-500/30">
+                                    <div class="text-sm font-bold text-indigo-200">Angels & Blessed Boys</div>
+                                    <div class="text-xs text-gray-300">Rose Chorus / Choir of Boys</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-amber-950/60 via-stone-900/80 to-amber-950/60 border border-amber-800/50 p-5 rounded-2xl text-center space-y-3">
+                            <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-amber-900/40 text-amber-300 border border-amber-700/40 text-sm font-bold uppercase tracking-wider">
+                                <i class="fas fa-mountain"></i> Level 1: Earthly Depths
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 pt-1">
+                                <div class="bg-mahler-darkBg p-4 rounded-xl border border-amber-800/30">
+                                    <div class="text-sm font-bold text-amber-200">Pater Ecstaticus</div>
+                                    <div class="text-xs text-gray-300">Tenor</div>
+                                </div>
+                                <div class="bg-mahler-darkBg p-4 rounded-xl border border-amber-800/30">
+                                    <div class="text-sm font-bold text-amber-200">Pater Profundus</div>
+                                    <div class="text-xs text-gray-300">Bass</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4 bg-mahler-darkBg border-t border-mahler-cardBorder text-right">
+                    <button @click="lightboxImage = null" class="px-5 py-2 rounded-xl bg-mahler-gold text-mahler-darkBg font-bold text-sm hover:bg-mahler-goldLight transition-all">
+                        Close Diagram
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-mahler-darkBg border-t border-mahler-cardBorder py-8 mt-12 text-center text-xs text-mahler-muted space-y-2">
+            <p class="font-serif font-bold text-gray-400">Gustav Mahler — Symphony No. 8 in E-flat major</p>
+            <p>Digital Research & Analytical Companion • Based on Henry-Louis de la Grange scholarship</p>
+        </footer>
+    </div>
+
+    <script>
+        const { createApp, ref, computed } = Vue;
+
+        createApp({
+            setup() {
+                const activeTab = ref('overview');
+                const mobileMenuOpen = ref(false);
+                const structurePart = ref(1);
+                const trackPartFilter = ref('all');
+                const selectedTrack = ref(null);
+                const selectedRole = ref(null);
+                const textSearchQuery = ref('');
+                const textPartFilter = ref('all');
+                const lightboxImage = ref(null);
+
+                const tabs = [
+                    { id: 'overview', name: 'Overview', icon: 'fas fa-compass' },
+                    { id: 'structure', name: 'Structure', icon: 'fas fa-sitemap' },
+                    { id: 'tracks', name: 'Track Map', icon: 'fas fa-list-ol' },
+                    { id: 'roles', name: '8 Solo Roles', icon: 'fas fa-users' },
+                    { id: 'motifs', name: 'Motifs & Fugue', icon: 'fas fa-music' },
+                    { id: 'text', name: 'Full Text', icon: 'fas fa-book-open' },
+                    { id: 'history', name: 'History & Freud', icon: 'fas fa-landmark' },
+                    { id: 'quiz', name: 'Quiz', icon: 'fas fa-graduation-cap' }
+                ];
+
+                // Dudamel 32 Tracks Data
+                const tracks = [
+                    { id: 1, part: 1, title: 'Veni, creator spiritus', time: '1:21', measures: '1–30', analysis: 'Exposition opening. Explosive Allegro impetuoso in E-flat major setting first couplet of Verse 1.' },
+                    { id: 2, part: 1, title: 'Imple superna gratia', time: '5:34', measures: '46–107', analysis: 'Secondary section in D-flat & A-flat major. Soloists enter dolce, espressivo with Verse 2 (Qui Paraclitus).' },
+                    { id: 3, part: 1, title: 'Infirma nostri corporis', time: '7:14', measures: '141–168', analysis: 'Closing section of exposition. Verse 3 first couplet with shadow-variant of Veni motif.' },
+                    { id: 4, part: 1, title: 'Tempo I. Allegro, etwas hastig', time: '8:37', measures: '169–216', analysis: 'Development section 1. Instrumental interlude from far away, muted brass, low bell in A-flat.' },
+                    { id: 5, part: 1, title: 'Infirma nostri corporis virtute firmans', time: '11:06', measures: '217–257', analysis: 'Development section 2. Dark C-sharp minor variant of Veni theme.' },
+                    { id: 6, part: 1, title: 'Accende lumen sensibus', time: '16:24', measures: '262–412', analysis: 'Development sections 3–6. The hinge of the work! Radiant E major breakthrough, Hostem repellas drama, & Double Fugue (m. 312).' },
+                    { id: 7, part: 1, title: 'Qui Paraclitus diceris', time: '20:36', measures: '413–489', analysis: 'Recapitulation. Return of Veni theme on E-flat pedal point; contrapuntal Thought of Peace.' },
+                    { id: 8, part: 1, title: 'Gloria sit Patri Domino', time: '22:24', measures: '508–580', analysis: 'Coda doxology. All themes converge; offstage brass (4 trp + 3 trb) blares Accende theme.' },
+                    { id: 9, part: 2, title: 'Poco adagio', time: '5:42', measures: '1–140', analysis: 'Part II Prelude. Evokes desolate mountain clefts in E-flat minor with woodwind fragments.' },
+                    { id: 10, part: 2, title: 'Più mosso. Allegro moderato', time: '9:03', measures: '140–280', analysis: 'Prelude continues toward faster motion across mountain gorges.' },
+                    { id: 11, part: 2, title: 'Waldung, sie schwankt heran', time: '13:26', measures: '280–384', analysis: 'Choir of anchorites. Trumpet & horn foreshadow Accende theme at m. 422.' },
+                    { id: 12, part: 2, title: 'Ewiger Wonnebrand', time: '15:05', measures: '390–430', analysis: 'Pater Ecstaticus solo (Tenor). Five strophes of glowing ecstasy.' },
+                    { id: 13, part: 2, title: 'Wie Felsenabgrund mir zu Füßen', time: '19:04', measures: '430–540', analysis: 'Pater Profundus solo (Bass). Accende theme sounds in three passionate statements.' },
+                    { id: 14, part: 2, title: 'Gerettet ist das edle Glied', time: '20:05', measures: '385–410', analysis: 'Choir of Angels. Direct musical quotation from Part I Accende passage (mm. 262–281).' },
+                    { id: 15, part: 2, title: 'Jene Rosen, aus den Händen', time: '22:07', measures: '443–519', analysis: 'Rose Chorus of younger angels. Light Scherzando texture in E-flat major.' },
+                    { id: 16, part: 2, title: 'Uns bleibt ein Erdenrest', time: '23:47', measures: '540–580', analysis: 'More perfected angels. Borrowed from Part I Infirma theme (mm. 135–168).' },
+                    { id: 17, part: 2, title: 'Ich spür…', time: '24:20', measures: '580–611', analysis: 'Doctor Marianus entrance & transition into chorale.' },
+                    { id: 18, part: 2, title: 'Hier ist die Aussicht frei / Freudig empfangen', time: '24:56', measures: '612–638', analysis: 'Choir of Blessed Boys. Faust spiritual reincarnation theme.' },
+                    { id: 19, part: 2, title: 'Höchste Herrscherin der Welt', time: '27:10', measures: '639–720', analysis: 'Doctor Marianus praise of Mater Gloriosa. Key shifts E major → E-flat major.' },
+                    { id: 20, part: 2, title: 'Jungfrau, rein im schönsten Sinne', time: '28:38', measures: '720–757', analysis: 'Invocation of the Virgin Mother.' },
+                    { id: 21, part: 2, title: 'Äußerst langsam. Adagissimo', time: '30:09', measures: '780–860', analysis: 'Mater Gloriosa floating on high. Harp + Harmonium Religioso soundscape in E major.' },
+                    { id: 22, part: 2, title: 'Dir, der Unberührbaren', time: '32:12', measures: '860–905', analysis: 'Choir of Penitent Women leading to Magna Peccatrix.' },
+                    { id: 23, part: 2, title: 'Bei der Liebe, die den Füßen', time: '33:07', measures: '906–930', analysis: 'Magna Peccatrix solo (Soprano I).' },
+                    { id: 24, part: 2, title: 'Bei dem Bronn, zu dem schon weiland', time: '34:31', measures: '930–960', analysis: 'Mulier Samaritana solo (Alto I).' },
+                    { id: 25, part: 2, title: 'Bei dem hochgeweihten Orte', time: '35:33', measures: '957–990', analysis: 'Maria Aegyptiaca solo (Alto II).' },
+                    { id: 26, part: 2, title: 'Die du großen Sünderinnen', time: '37:10', measures: '993–1075', analysis: 'Trio of Penitent Women. Rose Chorus motif returns.' },
+                    { id: 27, part: 2, title: 'Neige, neige, du Ohnegleiche', time: '37:50', measures: '1075–1140', analysis: 'Gretchen (Una Poenitentium) plea to Mater Gloriosa.' },
+                    { id: 28, part: 2, title: 'Er überwächst uns schon', time: '39:05', measures: '1187–1212', analysis: 'Blessed Boys second appearance. Trumpets & horns on Accende.' },
+                    { id: 29, part: 2, title: 'Vom edlen Geisterchor umgeben', time: '41:08', measures: '1213–1248', analysis: 'Gretchen song: "Er ahnet kaum das frische Leben" set to Part I Imple theme.' },
+                    { id: 30, part: 2, title: 'Komm! hebe dich zu höhern Sphären', time: '42:16', measures: '1249–1276', analysis: 'Mater Gloriosa speaks two lines dolcissimo; love theme in brass.' },
+                    { id: 31, part: 2, title: 'Blicket auf zum Retterblick', time: '47:45', measures: '1277–1448', analysis: 'Doctor Marianus hymn & postlude with glockenspiel & tam-tam.' },
+                    { id: 32, part: 2, title: 'Alles Vergängliche', time: '52:52', measures: '1449–1572', analysis: 'Chorus Mysticus finale. Whisper to grand climax; Veni brass quotes close the work.' }
+                ];
+
+                const filteredTracks = computed(() => {
+                    if (trackPartFilter.value === '1') return tracks.filter(t => t.part === 1);
+                    if (trackPartFilter.value === '2') return tracks.filter(t => t.part === 2);
+                    return tracks;
+                });
+
+                // Eight Solo Roles
+                const roles = [
+                    {
+                        name: 'Pater Ecstaticus',
+                        voice: 'Tenor',
+                        level: 1,
+                        identity: 'Holy Hermit of the Gorges',
+                        description: 'Represents hovering spiritual ecstasy in the lower region. Sings "Ewiger Wonnebrand" in five strophes, expressing longing for annihilation of earthly desires.',
+                        keyQuote: 'Ewiger Wonnebrand, Glühendes Liebeband, Siedender Schmerz der Brust...',
+                        passage: 'Part II, mm. 385–430'
+                    },
+                    {
+                        name: 'Pater Profundus',
+                        voice: 'Bass',
+                        level: 2,
+                        identity: 'Hermit of the Deep Abyss',
+                        description: 'Represents the grounded, deep forces of nature and divine energy shaping the world. Accompanied by three statements of the Accende theme.',
+                        keyQuote: 'Wie Felsenabgrund mir zu Füßen... So ist es die allmächtige Liebe, die alles bildet, alles hegt.',
+                        passage: 'Part II, mm. 430–540'
+                    },
+                    {
+                        name: 'Doctor Marianus',
+                        voice: 'Tenor',
+                        level: 3,
+                        identity: 'Contemplative Saint in Highest Cell',
+                        description: 'Directs the spiritual gaze upward toward the Queen of Heaven. His motif is derived from the Accende theme and leads the "Blicket auf!" call.',
+                        keyQuote: 'Höchste Herrscherin der Welt! Lass mich im blauen, ausgespannten Himmelszelte dein Geheimnis schauen!',
+                        passage: 'Part II, mm. 639–757 & 1277–1420'
+                    },
+                    {
+                        name: 'Magna Peccatrix',
+                        voice: 'Soprano I',
+                        level: 4,
+                        identity: 'Mary Magdalene (Luke 7:36)',
+                        description: 'The first of the three biblical penitents pleading for Gretchen’s soul. Sings in intimate song-style of bathing Christ’s feet with tears.',
+                        keyQuote: 'Bei der Liebe, die den Füßen deines gottverklärten Sohnes Tränen ließ zum Balsam fließen...',
+                        passage: 'Part II, mm. 906–930'
+                    },
+                    {
+                        name: 'Mulier Samaritana',
+                        voice: 'Alto I',
+                        level: 5,
+                        identity: 'The Samaritan Woman at the Well (John 4)',
+                        description: 'The second biblical penitent, recalling the bucket at Jacob’s well that refreshed the Savior’s lips.',
+                        keyQuote: 'Bei dem Bronn, zu dem schon weiland Abram ließ die Herde führen...',
+                        passage: 'Part II, mm. 930–956'
+                    },
+                    {
+                        name: 'Maria Aegyptiaca',
+                        voice: 'Alto II',
+                        level: 6,
+                        identity: 'St. Mary of Egypt (Acta Sanctorum)',
+                        description: 'The third penitent woman, who repented in the desert for forty years. Unites with the other two in the Penitents’ Trio.',
+                        keyQuote: 'Bei dem hochgeweihten Orte, wo den Herrn man niederließ...',
+                        passage: 'Part II, mm. 957–990'
+                    },
+                    {
+                        name: 'Una Poenitentium',
+                        voice: 'Soprano II',
+                        level: 7,
+                        identity: 'Gretchen (Faust’s early beloved)',
+                        description: 'The redeemed soul of Gretchen who welcomes Faust into heaven. Her aria "Er ahnet kaum das frische Leben" uses music from Part I’s Imple superna gratia.',
+                        keyQuote: 'Neige, neige, du Ohnegleiche, du Strahlenreiche, dein Antlitz gnädig meinem Glück!',
+                        passage: 'Part II, mm. 1075–1186 & 1213–1248'
+                    },
+                    {
+                        name: 'Mater Gloriosa',
+                        voice: 'Voiceless / 2 lines (Soprano)',
+                        level: 8,
+                        identity: 'Queen of Heaven / Divine Feminine',
+                        description: 'The highest divine figure. She hovers in E major with harps and harmonium. Completely voiceless throughout her appearance, until she utters two brief lines inviting Gretchen and Faust upward.',
+                        keyQuote: 'Komm! hebe dich zu höhern Sphären! Wenn er dich ahnt, folgt er nach.',
+                        passage: 'Part II, mm. 780–860 & 1249–1276'
+                    }
+                ];
+
+                // Parallel Verses
+                const verses = [
+                    {
+                        "part": "I",
+                        "idx": 1,
+                        "speaker": "1. Exposition",
+                        "stageDir": "mm. 1–45  ·  Main Section",
+                        "german": "Veni, creator spiritus,\nMentes tuorum visita.",
+                        "english": "Come, Creator Spirit,\nVisit the minds of your people."
+                    },
+                    {
+                        "part": "I",
+                        "idx": 2,
+                        "speaker": "2. Secondary Section",
+                        "stageDir": "mm. 46–107  ·  Verse 1, second couplet, then Verse 2",
+                        "german": "Imple superna gratia,\nQuae tu creasti pectora.\n\nQui Paraclitus diceris,\nDonum Dei altissimi,\nFons vivus, ignis, caritas,\nEt spiritalis unctio.",
+                        "english": "Fill with heavenly grace\nThe hearts which you have created.\n\nYou who are called the Paraclete,\nThe highest gift of God,\nLiving fountain, fire, love,\nAnd spiritual unction."
+                    },
+                    {
+                        "part": "I",
+                        "idx": 3,
+                        "speaker": "3. Intermezzo",
+                        "stageDir": "mm. 108–123  ·  Verse 1 returns",
+                        "german": "Veni, creator spiritus,",
+                        "english": "Come, Creator Spirit,"
+                    },
+                    {
+                        "part": "I",
+                        "idx": 4,
+                        "speaker": "4. Closing Section of Exposition",
+                        "stageDir": "mm. 141–168  ·  Verse 3, first couplet",
+                        "german": "Infirma nostri corporis,\nVirtute firmans perpeti.",
+                        "english": "The weakness of our bodies,\nStrengthen with lasting power."
+                    },
+                    {
+                        "part": "I",
+                        "idx": 5,
+                        "speaker": "5. Development, Second Section",
+                        "stageDir": "mm. 217–257  ·  Verse 3, first couplet (re-composed)",
+                        "german": "Infirma nostri corporis,\nVirtute firmans perpeti.",
+                        "english": "The weakness of our bodies,\nStrengthen with lasting power."
+                    },
+                    {
+                        "part": "I",
+                        "idx": 6,
+                        "speaker": "6. Development, Third Section",
+                        "stageDir": "mm. 262–289  ·  Verse 3, second couplet — the breakthrough",
+                        "german": "Accende lumen sensibus,\nInfunde amorem cordibus.",
+                        "english": "Kindle light in our senses,\nPour love into our hearts."
+                    },
+                    {
+                        "part": "I",
+                        "idx": 7,
+                        "speaker": "7. Development, Fourth Section",
+                        "stageDir": "mm. 290–311  ·  Verse 4, first couplet",
+                        "german": "Hostem repellas longius,\nPacemque dones protinus.",
+                        "english": "Drive the enemy far away,\nAnd grant us peace at once."
+                    },
+                    {
+                        "part": "I",
+                        "idx": 8,
+                        "speaker": "8. Development, Fifth Section",
+                        "stageDir": "mm. 312–365  ·  the Double Fugue — Verse 4, second couplet + Verses 5 and 6",
+                        "german": "Ductore sic te praevio,\nVitemus omne noxium.\n\nPer te sciamus da Patrem,\nNoscamus atque filium,\nTeque utriusque Spiritum,\nCredamus omni tempore.\n\nTu septiformis munere,\nDigitus paternae dexterae,\nTu rite promissum Patris,\nSermone ditans guttura.",
+                        "english": "Under your guidance, may we so\nSee all that harms us flee away.\n\nThrough you may we know the Father,\nAnd also come to know the Son,\nAnd may we believe in you,\nThe Spirit of them both, at all times.\n\nYou, sevenfold in gifts,\nFinger of the Father's right hand,\nYou, the Father's promised One,\nEnriching our tongues with speech."
+                    },
+                    {
+                        "part": "I",
+                        "idx": 9,
+                        "speaker": "9. Development, Sixth Section",
+                        "stageDir": "mm. 366–412  ·  Verse 3, second couplet (returning)",
+                        "german": "Accende lumen sensibus,\nInfunde amorem cordibus.",
+                        "english": "Kindle light in our senses,\nPour love into our hearts."
+                    },
+                    {
+                        "part": "I",
+                        "idx": 10,
+                        "speaker": "10. Recapitulation, Secondary Section",
+                        "stageDir": "mm. 432–473  ·  Verse 2, first couplet",
+                        "german": "Qui Paraclitus diceris,\nDonum Dei altissimi,",
+                        "english": "You who are called the Paraclete,\nThe highest gift of God,"
+                    },
+                    {
+                        "part": "I",
+                        "idx": 11,
+                        "speaker": "11. Recapitulation, Secondary Section continued",
+                        "stageDir": "mm. 463ff.  ·  the thought of peace",
+                        "german": "Tu septiformis munere,\nPacemque dones protinus,\nDissolve litis vincula,\nAdstringe pacis foedera.",
+                        "english": "You, sevenfold in gifts,\nAnd grant us peace at once,\nDissolve the fetters of strife,\nBind the pacts of peace in closest union."
+                    },
+                    {
+                        "part": "I",
+                        "idx": 12,
+                        "speaker": "12. Recapitulation, Final Section",
+                        "stageDir": "mm. 474–489  ·  Verse 4, couplet 2",
+                        "german": "Ductore te praevio,\nVitemus omne pessimum.",
+                        "english": "Under your guidance, may we so\nSee all that harms us flee away."
+                    },
+                    {
+                        "part": "I",
+                        "idx": 13,
+                        "speaker": "13. Coda",
+                        "stageDir": "mm. 508–580  ·  Verse 8 (Doxology)",
+                        "german": "Gloria Patri Domino,\nNatoque, qui a mortuis\nSurrexit, ac Paraclito,\nIn saeculorum saecula.",
+                        "english": "Glory be to the Father, the Lord,\nAnd to the Son, who from the dead\nHas risen, and to the Paraclete,\nFor ages of ages."
+                    },
+                    {
+                        "part": "II",
+                        "idx": 1,
+                        "speaker": "Bergschluchten / Mountain Gorges, Forest, Rock, Desert",
+                        "stageDir": "",
+                        "german": "Bergschluchten",
+                        "english": "Mountain Gorges. Forest, Rock, Desert. Holy Anchorites, divided in ascending planes, posted among the ravines."
+                    },
+                    {
+                        "part": "II",
+                        "idx": 2,
+                        "speaker": "CHOR UND ECHO / Chorus and Echo",
+                        "stageDir": "",
+                        "german": "Waldung, sie schwankt heran,\nFelsen, sie lasten dran,\nWurzeln, sie klammern an,\nStamm dicht an Stamm hinan,\nWoge nach Woge spritzt,\nHöhle, die tiefste, schützt.\nLöwen, sie schleichen stumm,\nFreundlich um uns herum,\nEhren geweihten Ort,\nHeiligen Liebeshort.",
+                        "english": "Forests are waving grand,\nRocks, they are huge at hand,\nClutching, the roots expand,\nThickly the tree-trunks stand;\nFoaming comes wave on wave;\nShelter hath deepest cave;\nLions are prowling dumb,\nFriendly where'er we come,\nHonoring the sacred place,\nRefuge of Love and Grace!"
+                    },
+                    {
+                        "part": "II",
+                        "idx": 3,
+                        "speaker": "PATER ECSTATICUS",
+                        "stageDir": "hovering up and down",
+                        "german": "Ewiger Wonnebrand,\nGlühendes Liebeband,\nSiedender Schmerz der Brust,\nSchäumende Gotteslust.\nPfeile, durchdringet mich,\nLanzen, bezwinget mich,\nKeulen, zerschmettert mich,\nBlitze, durchwettert mich!\nDaß ja das Nichtige\nAlles verflüchtige,\nGlänze der Dauerstern,\nEwiger Liebe Kern.",
+                        "english": "Endless ecstatic fire,\nGlow of the pure desire,\nPain of the pining breast,\nRapture of God possessed!\nArrows, transpierce ye me,\nLances, coerce ye me,\nBludgeons, so batter me,\nLightnings, so shatter me,\nThat all of mortality's\nVain unrealities\nDie, and the Star above\nBeam but Eternal Love!"
+                    },
+                    {
+                        "part": "II",
+                        "idx": 4,
+                        "speaker": "PATER PROFUNDUS",
+                        "stageDir": "Lower Region",
+                        "german": "Wie Felsenabgrund mir zu Füßen\nAuf tiefem Abgrund lastend ruht,\nWie tausend Bäche strahlend fließen\nZum grausen Sturz des Schaums der Flut,\nWie strack mit eignem kräftigen Triebe\nDer Stamm sich in die Lüfte trägt:\nSo ist es die allmächtige Liebe,\nDie alles bildet, alles hegt.\nIst um mich her ein wildes Brausen,\nAls wogte Wald und Felsengrund,\nUnd doch stürzt, liebevoll im Sausen,\nDie Wasserfülle sich zum Schlund,\nBerufen, gleich das Tal zu wässern;\nDer Blitz, der flammend niederschlug,\nDie Atmosphäre zu verbessern,\nDie Gift und Dunst im Busen trug —\nSind Liebesboten, sie verkünden,\nWas ewig schaffend uns umwallt.\nMein Innres mög' es auch entzünden,\nWo sich der Geist, verworren, kalt,\nVerquält in stumpfer Sinne Schranken,\nScharfangeschloßnem Kettenschmerz.\nO Gott! beschwichtige die Gedanken,\nErleuchte mein bedürftig Herz!",
+                        "english": "As at my feet abysses cloven\nRest on abysses deep below;\nAs thousand severed streams are woven\nTo foamy floods that plunging go;\nAs, up by self-impulsion driven,\nThe tree its weight sustains in air,\nTo Love, almighty Love, 't is given\nAll things to form, and all to bear.\nAround me sounds a savage roaring,\nAs rocks and forests heaved and swayed,\nYet plunges, bounteous in its pouring,\nThe wealth of waters down the glade,\nAppointed, then, the vales to brighten;\nThe bolt, that flaming struck and burst,\nThe atmosphere to cleanse and lighten,\nWhich pestilence in its bosom nursed, —\nLove's heralds both, the powers proclaiming,\nWhich, aye creative, us infold.\nMay they, within my bosom flaming,\nInspire the mind, confused and cold,\nWhich frets itself, through blunted senses,\nAs by the sharpest fetter-smart!\nO God, soothe Thou my thoughts bewildered,\nEnlighten Thou my needy heart!"
+                    },
+                    {
+                        "part": "II",
+                        "idx": 5,
+                        "speaker": "PATER SERAPHICUS",
+                        "stageDir": "Middle Region",
+                        "german": "Welch ein Morgenwölkchen schwebet\nDurch der Tannen schwankend Haar!\nAhn' ich, was im Innern lebet?\nEs ist junge Geisterschar.",
+                        "english": "What a cloud of morning hovers\nO'er the pine-trees' tossing hair!\nCan I guess what life it covers?\nThey are spirits, young and fair."
+                    },
+                    {
+                        "part": "II",
+                        "idx": 6,
+                        "speaker": "CHOR SELIGER KNABEN / Chorus of Blessed Boys",
+                        "stageDir": "First",
+                        "german": "Sag uns, Vater, wo wir wallen,\nSag uns, Guter, wer wir sind?\nGlücklich sind wir: allen, allen\nIst das Dasein so gelind.",
+                        "english": "Tell us, Father, where we wander;\nTell us, Kind One, who are we.\nHappy are we; for so tender\nUnto all, it is, To Be."
+                    },
+                    {
+                        "part": "II",
+                        "idx": 7,
+                        "speaker": "PATER SERAPHICUS",
+                        "stageDir": "continued",
+                        "german": "Knaben! Mitternachts-Geborne,\nHalb erschlossen Geist und Sinn,\nFür die Eltern gleich Verlorne,\nFür die Engel zum Gewinn.\nDaß ein Liebender zugegen,\nFühlt ihr wohl, so naht euch nur;\nDoch von schroffen Erdewegen,\nGlückliche! habt ihr keine Spur.\nSteigt herab in meiner Augen\nWelt- und erdgemäß Organ,\nKönnt sie als die euren brauchen,\nSchaut euch diese Gegend an!\nDas sind Bäume, das sind Felsen,\nWasserstrom, der abestürzt\nUnd mit ungeheurem Wälzen\nSich den steilen Weg verkürzt.",
+                        "english": "Boys, brought forth in midnights haunted,\nHalf-unsealed the sense and brain,\nFor the parents lost when granted,\nFor the angels sweetest gain!\nThat a loving heart is nigh you\nYou can feel: then come to me!\nBut of earthly ways that try you,\nBlest ones! not a trace have ye.\nEnter in mine eyes: enjoy them,\nOrgans for the earthly sphere!\nAs your own ye may employ them:\nLook upon the landscape here!\nThose are trees, there rocks defend us;\nHere, a stream that leaps below,\nAnd with plunges, wild, tremendous,\nShorteneth its journey so."
+                    },
+                    {
+                        "part": "II",
+                        "idx": 8,
+                        "speaker": "SELIGE KNABEN / Blessed Boys",
+                        "stageDir": "from within him",
+                        "german": "Das ist mächtig anzuschauen,\nDoch zu düster ist der Ort,\nSchüttelt uns mit Schreck und Grauen.\nEdler, Guter, laß uns fort!",
+                        "english": "To a vision grand we waken,\nBut the scenes too gloomy show;\nWe with fear and dread are shaken:\nKindest Father, let us go!"
+                    },
+                    {
+                        "part": "II",
+                        "idx": 9,
+                        "speaker": "PATER SERAPHICUS",
+                        "stageDir": "closing",
+                        "german": "Steigt hinan zu höherm Kreise,\nWachset immer unvermerkt,\nWie, nach ewig reiner Weise,\nGottes Gegenwart verstärkt.\nDenn das ist der Geister Nahrung,\nDie im freisten Äther waltet:\nEwigen Liebens Offenbarung,\nDie zur Seligkeit entfaltet.",
+                        "english": "Upward rise to higher borders!\nEver grow, insensibly,\nAs, by pure, eternal orders,\nGod's high Presence strengthens ye!\nSuch the Spirits' sustentation,\nWith the freest ether blending;\nLove's eternal Revelation,\nTo Beatitude ascending."
+                    },
+                    {
+                        "part": "II",
+                        "idx": 10,
+                        "speaker": "CHOR SELIGER KNABEN",
+                        "stageDir": "Second — circled around the highest summit",
+                        "german": "Hände verschlinget\nFreudig zum Ringverein,\nRegt euch und singet\nHeil'ge Gefühle drein!\nGöttlich belehret,\nDürft ihr vertrauen;\nDen ihr verehret,\nWerdet ihr schauen.",
+                        "english": "Hands now enring ye,\nJoyously wheeling!\nSoar ye and sing ye,\nWith holiest feeling!\nThe Teacher before ye,\nTrust, and be bold!\nWhom ye adore, ye\nHim shall behold."
+                    },
+                    {
+                        "part": "II",
+                        "idx": 11,
+                        "speaker": "ENGEL / Angels",
+                        "stageDir": "soaring in the higher atmosphere, bearing the immortal part of Faust",
+                        "german": "Gerettet ist das edle Glied\nDer Geisterwelt vom Bösen,\nWer immer strebend sich bemüht,\nDen können wir erlösen.\nUnd hat an ihm die Liebe gar\nVon oben teilgenommen,\nBegegnet ihm die selige Schar\nMit herzlichem Willkommen.",
+                        "english": "The noble Spirit now is free,\nAnd saved from evil scheming:\nWhoe'er aspires unweariedly\nIs not beyond redeeming.\nAnd if he feels the grace of Love\nThat from On High is given,\nThe Blessed Hosts, that wait above,\nShall welcome him to Heaven!"
+                    },
+                    {
+                        "part": "II",
+                        "idx": 12,
+                        "speaker": "DIE JÜNGEREN ENGEL / The Younger Angels",
+                        "stageDir": "First — Rose Chorus / Scherzo",
+                        "german": "Jene Rosen aus den Händen\nLiebend-heiliger Büßerinnen\nHalfen uns den Sieg gewinnen,\nUns das hohe Werk vollenden,\nDiesen Seelenschatz erbeuten.\nBöse wichen, als wir streuten,\nTeufel flohen, als wir trafen.\nStatt gewohnter Höllenstrafen\nFühlten Liebesqual die Geister;\nSelbst der alte Satansmeister\nWar von spitzer Pein durchdrungen.\nJauchzet auf! es ist gelungen.",
+                        "english": "They, the roses, freely spended\nBy the penitent, the glorious,\nHelped to make the fight victorious,\nAnd the lofty work is ended.\nWe this precious Soul have won us;\nEvil ones we forced to shun us;\nDevils fled us, when we hit them;\n'Stead of pangs of Hell, that bit them,\nLove-pangs felt they, sharper, vaster:\nEven he, old Satan-Master,\nPierced with keenest pain, retreated.\nNow rejoice! The work's completed!"
+                    },
+                    {
+                        "part": "II",
+                        "idx": 13,
+                        "speaker": "DIE VOLLENDETEREN ENGEL / The More Perfect Angels",
+                        "stageDir": "",
+                        "german": "Uns bleibt ein Erdenrest\nZu tragen peinlich,\nUnd wär' er von Asbest,\nEr ist nicht reinlich.\nWenn starke Geisteskraft\nDie Elemente\nAn sich herangerafft,\nKein Engel trennte\nGeeinte Zwienatur\nDer innigen beiden,\nDie ewige Liebe nur\nVermag's zu scheiden.",
+                        "english": "Earth's residue to bear\nHath sorely pressed us;\nIt were not pure and fair,\nThough 't were asbestus.\nWhen every element\nThe mind's high forces\nHave seized, subdued, and blent,\nNo Angel divorces\nTwin-natures single grown,\nThat inly mate them:\nEternal Love, alone,\nCan separate them."
+                    },
+                    {
+                        "part": "II",
+                        "idx": 14,
+                        "speaker": "DIE JÜNGEREN ENGEL",
+                        "stageDir": "Second",
+                        "german": "Nebelnd um Felsenhöh'\nSpür' ich soeben,\nRegend sich in der Näh',\nEin Geisterleben.\nDie Wölkchen werden klar,\nIch seh' bewegte Schar\nSeliger Knaben,\nLos von der Erde Druck,\nIm Kreis gesellt,\nDie sich erlaben\nAm neuen Lenz und Schmuck\nDer obern Welt.\nSei er zum Anbeginn,\nSteigendem Vollgewinn\nDiesen gesellt!",
+                        "english": "Mist-like on heights above,\nWe now are seeing\nNearer and nearer move\nSpiritual Being.\nThe clouds are growing clear;\nAnd moving throngs appear\nOf Blessed Boys,\nFree from the earthly gloom,\nIn circling poise,\nWho taste the cheer\nOf the new spring-time bloom\nOf the upper sphere.\nLet them inaugurate\nHim to the perfect state,\nNow, as their peer!"
+                    },
+                    {
+                        "part": "II",
+                        "idx": 15,
+                        "speaker": "DIE SELIGEN KNABEN / The Blessed Boys",
+                        "stageDir": "response",
+                        "german": "Freudig empfangen wir\nDiesen im Puppenstand;\nAlso erlangen wir\nEnglisches Unterpfand.\nLöset die Flocken los,\nDie ihn umgeben!\nSchon ist er schön und groß\nVon heiligem Leben.",
+                        "english": "Gladly receive we now\nHim, as a chrysalis:\nTherefore achieve we now\nPledge of our bliss.\nThe earth-flakes dissipate\nThat cling around him!\nSee, he is fair and great!\nDivine Life hath crowned him."
+                    },
+                    {
+                        "part": "II",
+                        "idx": 16,
+                        "speaker": "DOCTOR MARIANUS",
+                        "stageDir": "in the highest, purest cell",
+                        "german": "Hier ist die Aussicht frei,\nDer Geist erhoben.\nDort ziehen Fraun vorbei,\nSchwebend nach oben.\nDie Herrliche mitteninn\nIm Sternenkranze,\nDie Himmelskönigin,\nIch seh's am Glanze.\nHöchste Herrscherin der Welt!\nLasse mich im blauen,\nAusgespannten Himmelszelt\nDein Geheimnis schauen.\nBillige, was des Mannes Brust\nErnst und zart beweget\nUnd mit heiliger Liebeslust\nDir entgegenträget.\nUnbezwinglich unser Mut,\nWenn du hehr gebietest;\nPlötzlich mildert sich die Glut,\nWie du uns befriedest.\nJungfrau, rein im schönsten Sinn,\nMutter, Ehren würdig,\nUns erwählte Königin,\nGöttern ebenbürtig.",
+                        "english": "Free is the view at last,\nThe spirit lifted:\nThere women, floating past,\nAre upward drifted:\nThe Glorious One therein,\nWith star-crown tender, —\nThe pure, the Heavenly Queen,\nI know her splendor.\nHighest Mistress of the World!\nLet me in the azure\nTent of Heaven, in light unfurled,\nHere thy Mystery measure!\nJustify sweet thoughts that move\nBreast of man to meet thee,\nAnd with holy bliss of love\nBear him up to greet thee!\nWith unconquered courage we\nDo thy bidding highest;\nBut at once shall gentle be,\nWhen thou pacifiest.\nVirgin, pure in brightest sheen,\nMother sweet, supernal, —\nUnto us Elected Queen,\nPeer of Gods Eternal!"
+                    },
+                    {
+                        "part": "II",
+                        "idx": 17,
+                        "speaker": "DOCTOR MARIANUS AND CHORUS",
+                        "stageDir": "the Mater Gloriosa soars into the space",
+                        "german": "Um sie verschlingen\nSich leichte Wölkchen,\nSind Büßerinnen,\nEin zartes Völkchen,\nUm ihre Kniee\nDen Äther schlürfend,\nGnade bedürfend.\nDir, der Unberührbaren,\nIst es nicht benommen,\nDass die leicht Verführbaren\nTraulich zu dir kommen.\nIn die Schwachheit hingerafft,\nSind sie schwer zu retten;\nWer zerreißt aus eigner Kraft\nDer Gelüste Ketten?\nWie entgleitet schnell der Fuß\nSchiefem, glattem Boden?\nWen betört nicht Blick und Gruß,\nSchmeichelhafter Odem?",
+                        "english": "Light clouds are circling\nAround her splendor, —\nPenitent women\nOf natures tender,\nHer knees embracing,\nEther respiring,\nMercy requiring!\nThou, in immaculate ray,\nMercy not leavest,\nAnd the lightly led astray,\nWho trust thee, receivest!\nIn their weakness fallen at length,\nHard it is to save them:\nWho can crush, by native strength,\nVices that enslave them?\nWhose the foot that may not slip\nOn the surface slanting?\nWhom befool not eye and lip,\nBreath and voice enchanting?"
+                    },
+                    {
+                        "part": "II",
+                        "idx": 18,
+                        "speaker": "CHOR DER BÜSSERINNEN / Chorus of Women Penitents",
+                        "stageDir": "",
+                        "german": "Du schwebst zu Höhen\nDer ewigen Reiche,\nVernimm das Flehen,\nDu Ohnegleiche,\nDu Gnadenreiche!",
+                        "english": "To heights thou'rt speeding\nOf endless Eden:\nReceive our pleading,\nTranscendent Maiden,\nWith Mercy laden!"
+                    },
+                    {
+                        "part": "II",
+                        "idx": 19,
+                        "speaker": "MAGNA PECCATRIX",
+                        "stageDir": "St. Luke vii. 36",
+                        "german": "Bei der Liebe, die den Füßen\nDeines gottverklärten Sohnes\nTränen ließ zum Balsam fließen,\nTrotz des Pharisäerhohnes;\nBeim Gefäße, das so reichlich\nTropfte Wohlgeruch hernieder,\nBei den Locken, die so weichlich\nTrockneten die heil'gen Glieder —",
+                        "english": "By the love before him kneeling, —\nHim, Thy Son, a godlike vision;\nBy the tears like balsam stealing,\nSpite of Pharisees' derision;\nBy the box, whose ointment precious\nShed its spice and odors cheery;\nBy the locks, whose softest meshes\nDried the holy feet and weary! —"
+                    },
+                    {
+                        "part": "II",
+                        "idx": 20,
+                        "speaker": "MULIER SAMARITANA",
+                        "stageDir": "St. John iv",
+                        "german": "Bei dem Bronn, zu dem schon weiland\nAbram ließ die Herde führen,\nBei dem Eimer, der dem Heiland\nKühl die Lippe durft' berühren;\nBei der reinen, reichen Quelle,\nDie nun dorther sich ergießet,\nÜberflüssig, ewig helle\nRings durch alle Welten fließet —",
+                        "english": "By that well, the ancient station\nWhither Abram's flocks were driven;\nBy the jar, whose restoration\nTo the Saviour's lips was given;\nBy the fountain, pure and vernal,\nThence its present bounty spending, —\nOverflowing, bright, eternal,\nWatering the worlds unending! —"
+                    },
+                    {
+                        "part": "II",
+                        "idx": 21,
+                        "speaker": "MARIA AEGYPTIACA",
+                        "stageDir": "Acta Sanctorum",
+                        "german": "Bei dem hochgeweihten Orte,\nWo den Herrn man niederließ,\nBei dem Arm, der von der Pforte\nWarnend mich zurücke stieß;\nBei der vierzigjährigen Buße,\nDer ich treu in Wüsten blieb,\nBei dem seligen Scheidegruße,\nDen im Sand ich niederschrieb —",
+                        "english": "By the place, where the Immortal\nBody of the Lord hath lain;\nBy the arm, which, from the portal,\nWarning, thrust me back again;\nBy the forty years' repentance\nIn the lonely desert-land;\nBy the blissful farewell sentence\nWhich I wrote upon the sand! —"
+                    },
+                    {
+                        "part": "II",
+                        "idx": 22,
+                        "speaker": "ZU DREI / The Three",
+                        "stageDir": "",
+                        "german": "Die du großen Sünderinnen\nDeine Nähe nicht verweigerst\nUnd ein büßendes Gewinnen\nIn die Ewigkeiten steigerst,\nGönn auch dieser guten Seele,\nDie sich einmal nur vergessen,\nDie nicht ahnte, daß sie fehlte,\nDein Verzeihen angemessen!",
+                        "english": "Thou Thy presence not deniest\nUnto sinful women ever, —\nLiftest them to win the highest\nGain of penitent endeavor, —\nSo, from this good soul withdraw not —\nWho but once forgot, transgressing,\nWho her loving error saw not —\nPardon adequate, and blessing!"
+                    },
+                    {
+                        "part": "II",
+                        "idx": 23,
+                        "speaker": "UNA POENITENTIUM, SONST GRETCHEN GENANNT",
+                        "stageDir": "formerly named Margaret, stealing closer",
+                        "german": "Neige, neige,\nDu Ohnegleiche,\nDu Strahlenreiche,\nDein Antlitz gnädig meinem Glück!\nDer früh Geliebte,\nNicht mehr Getrübte,\nEr kommt zurück.",
+                        "english": "Incline, O Maiden,\nWith Mercy laden,\nIn light unfading,\nThy gracious countenance upon my bliss!\nMy loved, my lover,\nHis trials over\nIn yonder world, returns to me in this!"
+                    },
+                    {
+                        "part": "II",
+                        "idx": 24,
+                        "speaker": "SELIGE KNABEN / Blessed Boys",
+                        "stageDir": "approaching in hovering circles",
+                        "german": "Er überwächst uns schon\nAn mächtigen Gliedern,\nWird treuer Pflege Lohn\nReichlich erwidern.\nWir wurden früh entfernt\nVon Lebechören;\nDoch dieser hat gelernt,\nEr wird uns lehren.",
+                        "english": "With mighty limbs he towers\nAlready above us;\nHe, for this love of ours,\nWill richlier love us.\nEarly were we removed,\nEre Life could reach us;\nYet he hath learned and proved,\nAnd he will teach us."
+                    },
+                    {
+                        "part": "II",
+                        "idx": 25,
+                        "speaker": "DIE EINE BÜSSERIN, SONST GRETCHEN GENANNT / The Penitent (formerly named Margaret)",
+                        "stageDir": "",
+                        "german": "Vom edlen Geisterchor umgeben,\nWird sich der Neue kaum gewahr,\nEr ahnet kaum das frische Leben,\nSo gleicht er schon der heiligen Schar.\nSieh, wie er jedem Erdenbande\nDer alten Hülle sich entrafft\nUnd aus ätherischem Gewande\nHervortritt erste Jugendkraft.\nVergönne mir, ihn zu belehren,\nNoch blendet ihn der neue Tag.",
+                        "english": "The spirit-choir around him seeing,\nNew to himself, he scarce divines\nHis heritage of new-born Being,\nWhen like the Holy Host he shines.\nBehold, how he each band hath cloven,\nThe earthly life had round him thrown,\nAnd through his garb, of ether woven,\nThe early force of youth is shown!\nVouchsafe to me that I instruct him!\nStill dazzles him the Day's new glare."
+                    },
+                    {
+                        "part": "II",
+                        "idx": 26,
+                        "speaker": "MATER GLORIOSA",
+                        "stageDir": "floating above",
+                        "german": "Komm! hebe dich zu höhern Sphären!\nWenn er dich ahnet, folgt er nach.",
+                        "english": "Rise, thou, to higher spheres!\nConduct him, Who, feeling thee, shall follow there."
+                    },
+                    {
+                        "part": "II",
+                        "idx": 27,
+                        "speaker": "DOCTOR MARIANUS",
+                        "stageDir": "prostrate, adoring",
+                        "german": "Blicket auf zum Retterblick,\nAlle reuig Zarten,\nEuch zu seligem Geschick\nDankend umzuarten.\nWerde jeder beßre Sinn\nDir zum Dienst erbötig;\nJungfrau, Mutter, Königin,\nGöttin, bleibe gnädig!",
+                        "english": "Penitents, look up, elate,\nWhere she beams salvation;\nGratefully to blessed fate\nGrow, in re-creation!\nBe our souls, as they have been,\nDedicate to Thee!\nVirgin Holy, Mother, Queen,\nGoddess, gracious be!"
+                    },
+                    {
+                        "part": "II",
+                        "idx": 28,
+                        "speaker": "CHORUS MYSTICUS",
+                        "stageDir": "",
+                        "german": "Alles Vergängliche\nIst nur ein Gleichnis;\nDas Unzulängliche,\nHier wird's Ereignis;\nDas Unbeschreibliche,\nHier ist's getan;\nDas Ewig-Weibliche\nZieht uns hinan.",
+                        "english": "All things transitory\nBut as symbols are sent:\nEarth's insufficiency\nHere grows to Event:\nThe Indescribable,\nHere it is done:\nThe Woman-Soul leadeth us\nUpward and on!"
+                    }
+                ];
+
+                const filteredVerses = computed(() => {
+                    let list = verses;
+                    if (textPartFilter.value !== 'all') {
+                        list = list.filter(v => v.part === textPartFilter.value);
+                    }
+                    if (!textSearchQuery.value) return list;
+                    const q = textSearchQuery.value.toLowerCase();
+                    return list.filter(v =>
+                        v.speaker.toLowerCase().includes(q) ||
+                        (v.stageDir || '').toLowerCase().includes(q) ||
+                        v.german.toLowerCase().includes(q) ||
+                        v.english.toLowerCase().includes(q)
+                    );
+                });
+
+                const part1Count = verses.filter(v => v.part === 'I').length;
+                const part2Count = verses.filter(v => v.part === 'II').length;
+
+                // Audio Web Audio API Synth for Veni Motif
+                const playVeniMotif = () => {
+                    try {
+                        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                        const ctx = new AudioCtx();
+                        
+                        const playNote = (freq, startTime, duration) => {
+                            const osc = ctx.createOscillator();
+                            const gain = ctx.createGain();
+                            osc.type = 'triangle';
+                            osc.frequency.setValueAtTime(freq, ctx.currentTime + startTime);
+                            
+                            gain.gain.setValueAtTime(0.01, ctx.currentTime + startTime);
+                            gain.gain.exponentialRampToValueAtTime(0.3, ctx.currentTime + startTime + 0.05);
+                            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + startTime + duration);
+                            
+                            osc.connect(gain);
+                            gain.connect(ctx.destination);
+                            
+                            osc.start(ctx.currentTime + startTime);
+                            osc.stop(ctx.currentTime + startTime + duration);
+                        };
+
+                        // E♭5 = ~622.25 Hz, B♭4 = ~466.16 Hz (Falling Perfect Fourth)
+                        playNote(622.25, 0, 0.8);  // "Ve-"
+                        playNote(466.16, 0.7, 1.2); // "-ni!"
+                    } catch (e) {
+                        alert("Audio play failed or disabled by browser policy.");
+                    }
+                };
+
+                // Quiz Logic
+                const quizIndex = ref(0);
+                const quizScore = ref(0);
+                const quizAnswered = ref(false);
+                const quizSelectedOpt = ref(null);
+
+                const quizQuestions = [
+                    {
+                        question: 'Which statement accurately describes the solo roles in Mahler’s 8th Symphony?',
+                        options: [
+                            'Soloists sing throughout both Part I and Part II.',
+                            'Part I has no solo roles at all; all 8 solo roles belong exclusively to Part II.',
+                            'Part I has 4 soloists and Part II has 4 soloists.',
+                            'Solo roles appear only in the double fugue.'
+                        ],
+                        correct: 1,
+                        explanation: 'Part I is sung entirely by the double mixed chorus, children’s choir, and orchestra with no individual solo roles. All 8 solo roles emerge in Part II.'
+                    },
+                    {
+                        question: 'What interval defines the core "Veni" motif at the opening of Part I?',
+                        options: [
+                            'Rising Major Third',
+                            'Falling Perfect Fifth',
+                            'Falling Perfect Fourth (E♭ → B♭)',
+                            'Octave leap'
+                        ],
+                        correct: 2,
+                        explanation: 'The "Veni" motif is defined by a confident falling perfect fourth in E-flat major (E♭ to B♭).'
+                    },
+                    {
+                        question: 'What passage did Mahler describe as the "pivotal point" and bridge between the two parts?',
+                        options: [
+                            'The opening E-flat chord',
+                            'The "Accende lumen sensibus" fugue and breakthrough',
+                            'The Pater Profundus bass solo',
+                            'The Chorus Mysticus'
+                        ],
+                        correct: 1,
+                        explanation: 'Mahler declared to Webern that at "Accende lumen sensibus", the bridge extends over to the close of Faust, forming the structural hinge.'
+                    }
+                ];
+
+                const currentQuestion = computed(() => quizQuestions[quizIndex.value]);
+
+                const answerQuiz = (optIdx) => {
+                    if (quizAnswered.value) return;
+                    quizSelectedOpt.value = optIdx;
+                    quizAnswered.value = true;
+                    if (optIdx === currentQuestion.value.correct) {
+                        quizScore.value++;
+                    }
+                };
+
+                const nextQuestion = () => {
+                    quizAnswered.value = false;
+                    quizSelectedOpt.value = null;
+                    quizIndex.value++;
+                };
+
+                const resetQuiz = () => {
+                    quizIndex.value = 0;
+                    quizScore.value = 0;
+                    quizAnswered.value = false;
+                    quizSelectedOpt.value = null;
+                };
+
+                return {
+                    activeTab,
+                    mobileMenuOpen,
+                    tabs,
+                    structurePart,
+                    trackPartFilter,
+                    filteredTracks,
+                    selectedTrack,
+                    roles,
+                    selectedRole,
+                    textSearchQuery,
+                    textPartFilter,
+                    part1Count,
+                    part2Count,
+                    filteredVerses,
+                    playVeniMotif,
+                    quizIndex,
+                    quizScore,
+                    quizAnswered,
+                    quizSelectedOpt,
+                    quizQuestions,
+                    currentQuestion,
+                    answerQuiz,
+                    nextQuestion,
+                    resetQuiz,
+                    lightboxImage
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

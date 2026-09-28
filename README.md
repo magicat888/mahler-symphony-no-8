@@ -2,7 +2,7 @@
 
 A research archive on **Gustav Mahler's Symphony No. 8 in E-flat major**, the work he sketched in roughly ten weeks during the summer of 1906 and premiered in Munich on 12 September 1910.
 
-👉 **Live site:** [magicat888.github.io/mahler-symphony-no-8](https://magicat888.github.io/mahler-symphony-no-8)
+👉 **Live site:** [magicat888.github.io/mahler](https://magicat888.github.io/mahler)
 
 ## What's here
 
@@ -27,8 +27,8 @@ The full research archive covering the Symphony of a Thousand:
 
 Two suggested paths:
 
-- **📖 First encounter:** [Texts](https://magicat888.github.io/mahler-symphony-no-8/symphony-no-8-verses/) → [History](https://magicat888.github.io/mahler-symphony-no-8/mahler-8-historical-context/) → [Late-trajectory](https://magicat888.github.io/mahler-symphony-no-8/mahler-8-late-symphony-trajectory/) → [Main analysis](https://magicat888.github.io/mahler-symphony-no-8/mahler-8-analysis/) → dive into Part I or Part II
-- **🔬 Analytical reading:** Start at [Main analysis](https://magicat888.github.io/mahler-symphony-no-8/mahler-8-analysis/) and explore from there
+- **📖 First encounter:** [Texts](https://magicat888.github.io/mahler/symphony-no-8-verses/) → [History](https://magicat888.github.io/mahler/mahler-8-historical-context/) → [Late-trajectory](https://magicat888.github.io/mahler/mahler-8-late-symphony-trajectory/) → [Main analysis](https://magicat888.github.io/mahler/mahler-8-analysis/) → dive into Part I or Part II
+- **🔬 Analytical reading:** Start at [Main analysis](https://magicat888.github.io/mahler/mahler-8-analysis/) and explore from there
 
 ## How the site is built
 

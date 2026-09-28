@@ -2,9 +2,9 @@ site_name: Mahler — Symphony No. 8 in E-flat major
 site_description: A research archive on Mahler's Symphony No. 8, the "Symphony of a Thousand" — texts, analysis, recordings, and historical context.
 site_author: magicat888
 
-site_url: https://magicat888.github.io/mahler-symphony-no-8
-repo_url: https://github.com/magicat888/mahler-symphony-no-8
-repo_name: magicat888/mahler-symphony-no-8
+site_url: https://magicat888.github.io/mahler
+repo_url: https://github.com/magicat888/mahler
+repo_name: magicat888/mahler
 edit_uri: edit/main/docs/
 
 docs_dir: docs
